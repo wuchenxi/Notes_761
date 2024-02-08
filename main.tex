@@ -234,27 +234,29 @@ Another way of constructing smooth manifolds is by ``patching'' together locally
 
 \section{Partition of Unity and smooth approximation of functions}
 
+From now on unless specified otherwise, whenever we talk about a coordinate chart on a smooth manifold we require that it be in the smooth structure.\\
+
 \begin{dfn}
 Let $X$ be a topological space, $f$ a real valued function. The {\bf support} of $f$, denoted as $supp(f)$, is defined as $\overline{\{x\in X: f(x)\not=0\}}$.
 \end{dfn}
 
 \begin{lem}\label{lem1pu}
-Let $M$ be a smooth manifold, $i: U\rightarrow V$ a coordinate chart in the smooth structure. Let $f$ be a compactly supported smooth function on $V$, then $f': M\rightarrow\mathbb{R}$ defined as 
-\[f'(p)=\begin{cases} f(i(p)) & p\in U\\ 0 & p\not\in U\end{cases}\]
+Let $M$ be a smooth manifold, $i: U\rightarrow V$ a coordinate chart. Let $f$ be a compactly supported smooth function on $V$, then $g: M\rightarrow\mathbb{R}$ defined as 
+\[g(p)=\begin{cases} f(i(p)) & p\in U\\ 0 & p\not\in U\end{cases}\]
 is smooth on $M$.
 \end{lem}
 
 \begin{proof}
-    Let $i': U'\rightarrow V'$ be another coordinate chart in the smooth structure of $M$, and $q\in V'$. If $i'{-1}(q)\in U$, in a neighborhood of $q$ we have $f'\circ i'^{-1}=f\circ i\circ i'^{-1}$ hence is smooth. If not, by Lemma \ref{lem1para} there must be a neighborhood of $i'^{-1}(q)$ in $M$ which is disjoint from the support of $f'$, hence in a neighborhood of $q$ the function $f'\circ i'^{-1}=0$.
+    Let $i': U'\rightarrow V'$ be another coordinate chart in the smooth structure of $M$, and $q\in V'$. If $i'{-1}(q)\in U$, in a neighborhood of $q$ we have $g\circ i'^{-1}=f\circ i\circ i'^{-1}$ hence is smooth. If not, by Lemma \ref{lem1para} there must be a neighborhood of $i'^{-1}(q)$ in $M$ which is disjoint from the support of $g$, hence in a neighborhood of $q$ the function $g\circ i'^{-1}=0$.
 \end{proof}
 
 \begin{lem}\label{lem2pu}
-    Let $U$ be an open subset of $\mathbb{R}^n$, $V\subseteq U$ a bounded closed set. Then there is a smooth function $g$ on $\mathbb{R}^n$ such that $V\subseteq supp(g)\subseteq U$. 
+    Let $U$ be an open subset of $\mathbb{R}^n$, $V\subseteq U$ a bounded closed set. Then there is a compactly supported smooth function $g$ on $\mathbb{R}^n$ such that $supp(g)\subseteq U$ and $g$ is positive on $V$. 
 \end{lem}
 
 \begin{proof}
     Pick $\epsilon>0$ small enough such that the closure of the $\epsilon$-neighborhood of $V$ is contained in $U$. Let 
-    \[g'(x)=\begin{cases}1 & x\in V\\ {\epsilon-2dist(x, V)\over \epsilon} & 0<dist(x, V)<\epsilon/2 \\ 0 & dist(x, v) \geq \epsilon/2\end{cases}\]
+    \[g'(x)=\begin{cases}\epsilon-2dist(x, V) & dist(x, V)<\epsilon/2 \\ 0 & dist(x, v) \geq \epsilon/2\end{cases}\]
     Then we can let $g=g'*\phi$, where $\phi$ is a {\bf smooth bump function}:
     \[\phi(x_1, \dots, x_n)=\begin{cases}e^{-1/(\epsilon^2/4-\sum_i x_i^2)} & \sum_i x_i^2<\epsilon^2/4 \\ 0 & \sum_i x_i^2\geq \epsilon^2/4\end{cases}\]
 \end{proof}
@@ -262,7 +264,7 @@ is smooth on $M$.
 This is a stronger version of Lemma \ref{lem2para}:
 
 \begin{lem}\label{lem3pu}
-    Let $M$ be a smooth manifold, $\mathcal{C}$ an open cover. There is a countable refinement of $\mathcal{C}$, denoted as $\mathcal{D}$, such that each element in $\mathcal{D}$ is the domain of a coordinate chart of $M$ in its smooth structure, is homeomorphic to an open disc, and its closure is homeomorphic to a closed disc. 
+    Let $M$ be a smooth manifold, $\mathcal{C}$ an open cover. There is a countable refinement of $\mathcal{C}$, denoted as $\mathcal{D}$, such that each element in $\mathcal{D}$ is homeomorphic to an open disc, and its closure is homeomorphic to a closed disc and contained in the domain of some coordinate chart of $M$. 
 \end{lem}
 
 \begin{proof}
@@ -278,28 +280,29 @@ This is a stronger version of Lemma \ref{lem2para}:
 \end{proof}
 
 \begin{lem}\label{lem5pu}
-    Let $X$ be a hausdorff topological space, $\mathcal{C}$ a locally finite cover of $X$ such that the closure of all elements of $\mathcal{C}$ are compact. Then there is a locally finite cover $\mathcal{C}'$ and a surjection $i: \mathcal{C}\rightarrow \mathcal{C}'$, such that for any $U\in \mathcal{C}$, $U\subseteq i(U)$.
+    Let $X$ be a Hausdorff topological space, $\mathcal{C}$ a locally finite cover of $X$ such that the closure of all elements of $\mathcal{C}$ are compact. Then there is another locally finite cover $\mathcal{C}'$ and a surjection $I: \mathcal{C}\rightarrow \mathcal{C}'$, such that for any $U\in \mathcal{C}$, $U\subseteq I(U)$, and $\overline{I(U)}$ is compact.
 \end{lem}
 
 \begin{proof}
-    For any $U\in \mathcal{C}$, by Lemma \ref{lem4pu}, there are finitely many elements in $\mathcal{C}$ that have non-empty intersection with $\overline{U}$. Let $i(U)$ be their union. To show that $\{ i(U): U\in\mathcal{C}\}$ is locally finite, for any $p\in X$, let $U$ be an element of $\mathcal{C}$ that contains $p$. Then $U\cap i(V)\not=\emptyset$ iff there is some $W\in\mathcal{C}$ such that $U\cap W\not=\emptyset$, $W\cap V\not=\emptyset$. It is easy to see that there are only finitely many such $V$.
+    For any $U\in \mathcal{C}$, by Lemma \ref{lem4pu}, there are finitely many elements in $\mathcal{C}$ that have non-empty intersection with $\overline{U}$. Let $I(U)$ be their union. It is easy to show that $I(U)\cap I(U')\not=\emptyset$ iff there are $V, W\in\mathcal{C}$ such that $U\cap V\not=\emptyset$, $V\cap W\not=\emptyset$ and $W\cap U'\not=\emptyset$. It is easy to see that given any $U$ there are only finitely many such $U'$. Let $\mathcal{C}'=\{I(U): U\in\mathcal{C}\}$.
 \end{proof}
 
 We will now prove the main theorem:
 
-\begin{thm}\label{pu}
+\begin{thm}[Partition of Unity]\label{pu}
 Let $M$ be a smooth manifold, $\mathcal{C}$ an open cover. Then:
 \begin{enumerate}
-    \item There is a countable, locally finite refinement $\mathcal{C}'$ of $\mathcal{C}$, such that for every $D\in \mathcal{C}'$ there is a non-negative smooth function $f_D$ with compact support containing in $D$, and $1=\sum_D f_D$.
-    \item For every $U\in\mathcal{C}$, there is a non-negative smooth function $f_U$ whose support is in $U$, such that $1=\sum_U f_U$. Here the right hand side always have finitely many non-zero terms.
+    \item There is a countable, locally finite refinement $\mathcal{C}'$ of $\mathcal{C}$, such that for every $D\in \mathcal{C}'$, $\overline{D}$ is compact, and there is a non-negative, compactly supported smooth function $f_D$ on $M$ with $supp(f)\subseteq D$, and $1=\sum_D f_D$.
+    \item For every $U\in\mathcal{C}$, there is a non-negative smooth function $f_U$ on $M$ whose support is in $U$, such that $1=\sum_U f_U$. Here the right hand side always have finitely many non-zero terms.
 \end{enumerate}
 \end{thm}
 
-
 \begin{proof}
-    Apply Theorem \ref{para} to the $\mathcal{D}$ from Lemma \ref{lem3pu}, we get a locally finite refinement denoted as $\mathcal{C}''$. Apply Lemma \ref{lem5pu}, shrinking the resulting open sets if necessary so that their closures are in a coordinate chart in the smooth structure of $M$, we get the locally finite cover $\mathcal{C}'$ and surjection $I: \mathcal{C}''\rightarrow \mathcal{C}'$. For every $V\in\mathcal{C}''$, apply Lemma \ref{lem2pu} to the image of $V$ and $I(V)$ under the coordinate chart, then by Lemma \ref{lem1pu} one can get a smooth non-negative function $f_V$ whose support contains $\overline{V}$ and is contained in $I(V)$. Then 
-    \[f_D={\sum_{W\in\mathcal{C}'', I(W)=D}f_W\over\sum_{V\in\mathcal{C}''}f_V}\]
-    To show part 2, for every $D\in\mathcal{C}'$, pick some $U_D\in \mathcal{C}$ such that $D\subseteq U_D$, and let $f_U=\sum_{U_D=U}f_D$. 
+    Apply Theorem \ref{para} to the cover $\mathcal{D}$ from Lemma \ref{lem3pu}, we get a countable locally finite refinement denoted as $\mathcal{C}''$. Apply Lemma \ref{lem5pu}, we get $\mathcal{D}'=\{I(W): W\in\mathcal{C}''\}$. For every $W\in\mathcal{C}''$, there is a coordinate chart $i_W: U_W\rightarrow V_W$ such that $\overline{W}\subseteq U_W$. Let $J(W)=I(W)\cap U_W$, $\mathcal{C}'=\{J(W)\}$, then $\mathcal{C}'$ is a countable locally finite cover by elements whose closures are compact.\\
+
+    Now apply Lemma \ref{lem2pu} to $i_W(\overline{W})\subseteq i_W(J(W))$, and apply Lemma \ref{lem1pu} to the resulting smooth functions, we get smooth non negative functions $g_W$ which is positive on $W$ and has compact support contained in $J(W)$. Then we can let 
+    \[f_D={\sum_{W\in\mathcal{C}'', J(W)=D}f_W\over\sum_{V\in\mathcal{C}''}f_V}\]
+    To show part 2, for every $D\in\mathcal{C}'$, pick some $U_D\in \mathcal{C}$ such that $D\subseteq U_D$, and let \[f_U=\sum_{U_D=U}f_D\]
 \end{proof}
 
 As an application, we have the following results:
@@ -309,38 +312,112 @@ Let $M$ be a smooth manifold, $A\subseteq M$ a closed set. Let $f$ be a real val
 \end{lem}
 
 \begin{proof}
-Consider the open cover of $M$: $\mathcal{C}=\{U_p: p\in A\}\cup\{M\backslash A\}$. Apply Lemma \ref{lem3pu} to get $\mathcal{D}$, then Part 1 of Theorem \ref{pu} to get $\mathcal{D}'$ with partition of unity functions $\{f_D: D\in\mathcal{D}'\}$. Now for every $D\in\mathcal{D}'$, if $D\subseteq U_p$ for some $p$, pick one such $p$ and set $g_D=f_Df_p$, otherwise let $g_D=0$. Then $g=\sum_{D\in\mathcal{D}'}g_D$ is the required smooth function.
+Consider the open cover of $M$: 
+\[\mathcal{C}=\{U_p: p\in A\}\cup\{M\backslash A\}\]
+Apply part 2 of Theorem \ref{pu}, let $g=\sum_{p\in A}f_{U_p}f_p$.
 \end{proof}
+
+\begin{rmk}
+    It is easy to see that the condition of $A$ being closed is necessary.
+\end{rmk}
 
 \begin{rmk}
     If $f$ satisfies the assumptions of Lemma \ref{extend}, we say $f$ is {\bf smooth on $A$}.
 \end{rmk}
 
-\begin{thm}[First Smooth Approximation for Functions]\label{approx1}
-Let $M$ be a smooth manifold, $f$ a continuous, real valued function on $M$, and let $\epsilon$ be any positive real number. Then there is a smooth function $g$ on $M$ such that $|f-g|\leq \epsilon$.
+\begin{thm}[Smooth Approximation for Functions, first version]\label{approx1}
+Let $M$ be a smooth manifold, $f$ a continuous, real valued function on $M$, and let $\epsilon$ be any positive real valued function on $M$. Then there is a smooth function $g$ on $M$ such that $|f-g|\leq \epsilon$.
 \end{thm}
 
-\begin{proof} Let $\mathcal{D}$ be the open cover from Lemma \ref{lem3pu}, apply Theorem \ref{pu} part 1 we get a countable, locally finite refinement $\mathcal{D}'$ and a set of compactly supported smooth functions $\{f_D: D\in \mathcal{D}'\}$. Now every $D\in\mathcal{D}'$ lies in some $U\in\mathcal{D}$. Let $i_U$ be the corresponding smooth coordinate chart, and $i_D=i_U|_D$. Then $(ff_D)\circ i_D^{-1}$ is a continuous function with compact support, and the support is contained in open set $i_D(D)\subseteq \mathbb{R}^n$.\\
+\begin{proof} Let $\mathcal{D}$ be the open cover from Lemma \ref{lem3pu}, apply Theorem \ref{pu} part 1 we get a countable, locally finite refinement $\mathcal{D}'$ and a set of compactly supported smooth functions $\{f_D: D\in \mathcal{D}'\}$. Now every $D\in\mathcal{D}'$ lies in some $U\in\mathcal{D}$. Let $i_U$ be the corresponding smooth coordinate chart, and $i_D=i_U|_D$. Then $(ff_D)\circ i_D^{-1}$ is a continuous function with compact support hence uniformly continuous, and the support is contained in open set $i_D(D)\subseteq \mathbb{R}^n$.\\
 
-Because $\overline{D}$ is compact, the cardinality of the set $\{D'\in\mathcal{D}': \overline{D}\cap\overline{D}'\not=\emptyset\}$ is finite. Let $N_D\in\mathbb{Z}_{>0}$ be this cardinality. By convolution with a smooth bump function, we can find a smooth function $h_D$ on $\mathbb{R}^n$ with compact support contained in $i_D(D)$ such that $|h_D-(ff_D)\circ i_D^{-1}|<{\epsilon\over 2N_D}$. Now let $g=\sum_{D\in\mathcal{D}'}(h_D\circ i_D)$.
+Because $\overline{D}$ is compact, by Lemma \ref{lem4pu}, the cardinality of the set $\{D'\in\mathcal{D}': D\cap D'\not=\emptyset\}$ is finite. Let $N_D\in\mathbb{Z}_{>0}$ be this cardinality. Because any continuous function with compact support is uniformly continuous, by convolution with a smooth bump function (or alternatively, the Stone-Weierstrass theorem), we can find a smooth function $h_D$ with compact support contained in $i_D(D)$ such that $|h_D-(ff_D)\circ i_D^{-1}|<{\epsilon\over 2N_D}$. Now let $g=\sum_{D\in\mathcal{D}'}g_D$, where $g_D=h_D\circ i_D$ on $D$ and is $0$ elsewhere. 
 \end{proof}
 
 
-\begin{thm}[Second Smooth Approximation for Functions]\label{approx2}
-Let $M$ be a smooth manifold, $f$ a continuous, real valued function on $M$, which is smooth on closed set $A$. Let $\epsilon$ be any positive real number. Then there is a smooth function $g$ on $M$ such that $|f-g|\leq \epsilon$, and $f=g$ on $A$.
+\begin{thm}[Whitney's Smooth Approximation for Functions]\label{approx2}
+Let $M$ be a smooth manifold, $f$ a continuous, real valued function on $M$, which is smooth on closed set $A$. Let $\epsilon$ be any positive continuous function on $M$. Then there is a smooth function $g$ on $M$ such that $|f-g|\leq \epsilon$, and $f=g$ on $A$.
 \end{thm}
 
 \begin{proof}
-    Let $h$ be the smooth extension of $f|_A$ in Lemma \ref{extend}. $U_A$ be a neighborhood of $A$ on which $|f-h|<\epsilon/2$. Then $\{U_A, M\backslash A\}$ is an open cover of $M$, apply Lemma \ref{lem3pu} to get a refinement $\mathcal{D}$, and continue as in Theorem \ref{approx1}, with the only modification being that if $D\in\mathcal{D}'$ is a subset of $U_A$ then $h_D=(hf_D)\circ i_D^{-1}$.
+    Let $h$ be the smooth extension of $f|_A$ in Lemma \ref{extend}. $U_A$ be a neighborhood of $A$ on which $|f-h|<\epsilon/2$. Then $\{U_A, M\backslash A\}$ is an open cover of $M$. Apply Theorem \ref{approx1}, let $g_1$ be a smooth function on $M\backslash A$ such that $|g_1-f|<\epsilon/2$.  Now apply Theorem \ref{pu} part 2 to the abovementioned open cover, and let $g=f_{U_A}h+f_{M\backslash A}g_1$.
 \end{proof}
 
+
+
+\newpage
+
+\section{Rank Theorem, Immersion, submersion and embedding}
+
+The goal of this section is to study the {\em local normal form} of a smooth map between smooth manifolds.\\
+
+\begin{dfn}
+Let $f: M\rightarrow N$ be a smooth map, $p\in M$. Let $i: U\rightarrow V$ be a coordinate chart on $M$ whose domain contains $p$, $j: U'\rightarrow N$ a coordinate chart on $N$ whose domain contains $f(p)$, then the {\bf rank} of $f$ at $p$ is rank of the derivative of $j\circ f\circ i^{-1}$ at $i(p)$.
+\end{dfn}
+
+Recall that if $f$ is a smooth function from an open set in $\mathbb{R}^m$ to $\mathbb{R}^n$, $f=(f_1, \dots, f_n)$, then the derivative $Df$ at a point in the domain is the $n\times m$ matrix where the $(i, j)$-entry is $\partial f_i/\partial x_j$.
+
 \begin{rmk}
-    The $\epsilon$ in Theorem \ref{approx1} and Theorem \ref{approx2} can be replaced by positive, continuous functions (in Theorem \ref{approx1}) or non negative continuous functions whose zeros are all in $A$ (in Theorem \ref{approx2}).
+    By chain rule and linear algebra, one can see that the rank is independent of the choice of the coordinate charts. 
 \end{rmk}
 
-\section{Rank Theorem, Embedded submanifolds}
+\begin{rmk}
+    It is easy to see that the rank of a smooth function is lower semicontinuous.
+\end{rmk}
 
-\section{Manifolds with Boundary}
+The main theorem for this section is:
+
+\begin{thm}[Rank Theorem]\label{rank}
+    Let $f: M\rightarrow N$ be a smooth map, $p\in M$ and the rank of $f$ is $r$ in a neighborhood of $p$. Let $m=\dim(M)$, $n=\dim(N)$. Then there are coordinate charts $i$ and $j$ whose domain contains $p$ and $f(p)$ respectively, such that $i(p)$ and $j(f(p))$ are the origins of $\mathbb{R}^m$ and $\mathbb{R}^n$, and $j\circ f\circ i^{-1}$ is $(x_1, \dots, x_m)\mapsto (x_1, \dots, x_r, 0, \dots, 0)$.
+\end{thm}
+
+The proof is based on this fact from analysis:
+
+\begin{thm}[Inverse Function Theorem]\label{inv}
+    Let $f: D\subseteq \mathbb{R}^n\rightarrow \mathbb{R}^n$ be a smooth map defined on a neighborhood of $0$, $f(0)=0$ and $Df|_0$ is non singular, then there are neighborhoods $U$ and $V$ both containing $0$ such that $f|_U$ is a diffeomorphism from $U$ to $V$.
+\end{thm}\qed
+
+There are many ways to prove inverse function theorem, e.g. by finding a fixed point of a contraction map.\\
+
+\begin{proof}[Proof of Theorem \ref{rank}]
+    Without loss of generality we can assume $M$ and $N$ be open subsets of $\mathbb{R}^n$ and $\mathbb{R}^n$ containing the origin, $f=(f_1, \dots, f_n)$ sends the origin to origin, and its derivative at origin is $\left[\begin{array}{cc} I_r & 0\\ 0 & 0\end{array}\right]$. Apply Theorem \ref{inv} to the map $i: M\rightarrow \mathbb{R}^m$ defined as 
+    \[i(x_1, \dots, x_m)=(f_1, \dots, f_r, x_{r+1}, \dots, x_m)\]
+    Then $i$ is a local diffeomorphism around the origin hence a local coordinate chart after restriction. Let 
+    \[H_j(y_1, \dots, y_n)=f_j(i^{-1}(y_1, \dots, y_r, 0, \dots))\]
+    Then 
+    \[j(y_1, \dots, y_n)=(y_1, \dots, y_r, y_{r+1}-H_{r+1}, \dots, y_n-H_n)\]
+    To show that $j\circ f\circ i^{-1}$ is the required map, note that 
+    \[f\circ i^{-1}(y_1, \dots, y_r, x_{r+1}, \dots,  x_m)=f\circ i^{-1}(y_1, \dots, y_r, 0, \dots, 0)\]
+    because $f\circ i^{-1}$ is rank $r$ which implies that $\partial (f_l\circ i^{-1})/\partial x_k=0$ for $l, k>r$.
+\end{proof}
+
+\begin{dfn}
+    A smooth map $f: M\rightarrow N$ is called
+    \begin{itemize}
+        \item An {\bf immersion} if $Df$ always define an injective linear map.
+        \item A {\bf submersion} if $Df$ always define a surjective linear map.
+        \item An {\bf embedding} if it is an immersion and a homeomorphism from $M$ to $f(M)$ with subspace topology. When $f$ is inclusion map we call $M$ an {\bf embedded submanifold} of $N$.
+        \item A {\bf local diffeomorphism} if it is both an immersion and a submersion.
+    \end{itemize}
+\end{dfn}
+
+\begin{rmk}
+    Open submanifolds are special cases of embedded submanifolds.
+\end{rmk}
+
+\begin{thm}
+    Let $M$ be a smooth manifold, $A\subseteq M$. The followings are equivalent:
+    \begin{enumerate}
+        \item $A$ is an embedded submanifold of dimension $r$
+        \item For every $p\in A$, there is a coordinate chart $i_p: U_p\rightarrow V_p$, such that $p\in U_p$, $i_p(p)=0\in V_p$, and $i_p(A)$ is an open subset of the subspace of $\mathbb{R}^{\dim(M)}$ spanned by the first $r$ coordinate vectors.
+        \item For every $p\in A$, there is an open neighborhood $U_p$, a smooth submersion $h$ from $U_p$ to $\mathbb{R}^{\dim(M)-r}$, such that $A\cap U_p=h^{-1}(0)$.
+    \end{enumerate}
+\end{thm}
+
+
+\newpage
+
+\section{Manifold with boundary}
 
 \appendix
 
@@ -370,10 +447,31 @@ and be defined as
 \[i_{u, v, H}(W)=(\phi_H(a_W), \phi_H(b_W))\]
 such that
 \[W\cap (u+H)=\{u+a_W\}, W\cap (v+H)=\{v+b_W\}\]
-Show that $M$ has a smooth manifold structure such that $\{i_{u, v, H}\}$ is a smooth atlas. This smooth manifold M is called the Grassmannian $Gr_2(\mathbb{R}^4)$.
+Show that $M$ has a smooth manifold structure such that $\{i_{u, v, H}\}$ is a smooth atlas. This smooth manifold M is called the Grassmannian $Gr_2(\mathbb{R}^4)$
+
+\newpage
 
 \section{Notes on Projective Spaces}
 
+\begin{dfn}
+    Let $X$ be a topological space, $p: X\rightarrow Y$ a surjection. The {\bf quotient topology} on $Y$ is one such that a subset $U$ of $Y$ is open iff $p^{-1}(U)$ is open in $X$.
+\end{dfn}
+
+\begin{dfn}
+    Let $\mathbb{S}^n=\{(x_0, \dots, x_n)\in\mathbb{R}^{n+1}: \sum_{i=0}^n x_i^2=1\}$, with subspace topology. Define an equivalence relation $\sim$, such that $(x_0, \dots, x_n)\sim (y_0, \dots, y_n)$ iff either $x_k=y_k$ for all $k$, or $x_k=-y_k$ for all $k$. Then $\mathbb{S}^n/\sim$ with the quotient topology is called the n-dimenstional {\bf real projective space}, denoted as $\mathbb{RP}^n$. When $n=1$ and $2$ it is also called the {\bf real projective line} and the {\bf real projective plane} respectively. A point in $\mathbb{RP}^n$ can be represented by a representative of this equivalence class in $\mathbb{S}^n$, with the notation of $[x_0, \dots, x_n]$ or $[x_0:x_1:\dots:x_n]$, called the {\bf homogenuous coordinates} (which {\bf is not} a coordinate chart). 
+\end{dfn}
+
+\begin{dfn}
+    Let $\mathbb{S}^{2n+1}=\{(z_0, \dots, z_n)\in\mathbb{C}^{n+1}: \sum_{i=0}^n z_i\overline{z_i}=1\}$. Here we identify $\mathbb{C}$ with $\mathbb{R}^2$ by looking at the real part and imaginary part of a complex number. Define an equivalence relation $\sim$, such that $(z_0, \dots, z_n)\sim (z'_0, \dots, z'_n)$ iff there is some $\lambda\in\mathbb{C}$ such that $z'_k=\lambda z_k$ for all $k$. Then $\mathbb{S}^{2n+1}/\sim$ with the quotient topology is called the n-dimenstional {\bf complex projective space}, denoted as $\mathbb{CP}^n$. When $n=1$ and $2$ it is also called the {\bf complex projective line} and the {\bf complex projective plane} respectively. We can write down elements of $\mathbb{CP}^n$ via the homogenuous coordinates similarly. 
+\end{dfn}
+    
+The Euclidean metrics on $\mathbb{R}^{n+1}$ and $\mathbb{C}^{n+1}$ induce metrics on $\mathbb{RP}^n$ and $\mathbb{CP}^n$ as follows: let $p, q$ be two points on $\mathbb{RP}^n$ (or $\mathbb{CP}^n$), $p', q'$ their representatives on $\mathbb{S}^{n+1}$ (or $\mathbb{S}^{2n+1}$), then $d(p, q)=\inf_{r\sim q}d_{Euclid}(p, r)$ where $d_{Euclid}$ is the Euclidean distance. It is easy to see, e.g. by calculation, that the topology induced by these metrics are the same as the quotient topology, which implies that both $\mathbb{RP}^n$ and $\mathbb{CP}^n$ are Hausdorff. The subset where the ratios of the homogenuous coordinates are all rational (or all in $\mathbb{Q}[\sqrt{-1}]$) is a dense countable subset, hence both are second countable.\\
+
+Let $M=\mathbb{RP}^n$ (or $\mathbb{CP}^n$), there are $n+1$ open subsets $U_k=\{[x_0:\dots:x_n] : x_k\not=0\}$ which form an open cover. Each of these open subsets are homeomorphic to $\mathbb{R}^n$ (or $\mathbb{C}^n$, which we identify with $\mathbb{R}^{2n}$) by the map
+
+\[[x_0:\dots:x_n]\mapsto (x_0/x_k, \dots, x_{k-1}/x_k, x_{k+1}/x_k, \dots, x_n/x_k)\]
+
+This show that both $\mathbb{RP}^n$ and $\mathbb{CP}^n$ are locally Euclidean hence both are topological manifolds. The $n+1$ homeomorphisms form a smooth atlas on $\mathbb{RP}^n$ ($\mathbb{CP}^n$), which make them smooth manifolds as well.
 
 
 \end{document}
