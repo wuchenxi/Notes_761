@@ -23,6 +23,8 @@
 
 \section{Topological Manifolds}
 
+{\em Section 1.1 of textbook}\\
+
 Firstly let's recall some basic concepts from topology:
 
 \begin{enumerate}
@@ -134,6 +136,8 @@ The main theorem of this section is the following:
 
 \section{Smooth Structure, Smooth Functions and Smooth Maps}
 
+{\em Sections 1.2, 1.3 and 2.1 of textbook}\\
+
 \begin{dfn}
     Let $M$ be a topological manifold. By a {\bf coordinate chart}, we mean a homeomorphism from an open subset of $M$ to an open subset of $\mathbb{R}^n$. An {\bf smooth atlas} is a set of coordinate charts $\{i_\alpha: U_\alpha\rightarrow V_\alpha\subseteq \mathbb{R}^n\}$, such that
     \begin{itemize}
@@ -210,7 +214,7 @@ The followings follow immediately from the fact that compositions of diffeomorph
 
 Another way of constructing smooth manifolds is by ``patching'' together locally Euclidean pieces. Namely:
 
-\begin{thm}
+\begin{thm}\label{patch}
     If $M$ is a set, $\{U_\alpha\}$ a set of subsets of $M$, $\bigcup_\alpha U_\alpha=M$. For every $U_\alpha$, there is a bijection $i_\alpha$ from $U_\alpha$ to an open subset of $\mathbb{R}^d$, denoted as $V_\alpha$. If
     \begin{enumerate}[(1)]
         \item If $U_a\cap U_b\not=\emptyset$, then $i_a(U_a\cap U_b)$ is an open subset of $V_a$.
@@ -233,6 +237,8 @@ Another way of constructing smooth manifolds is by ``patching'' together locally
 \newpage
 
 \section{Partition of Unity and smooth approximation of functions}
+
+{\em Sections 2.2 and 6.4 of textbook}\\
 
 From now on unless specified otherwise, whenever we talk about a coordinate chart on a smooth manifold we require that it be in the smooth structure.\\
 
@@ -272,7 +278,7 @@ This is a stronger version of Lemma \ref{lem2para}:
 \end{proof}
 
 \begin{lem}\label{lem4pu}
-    Let $X$ be a topological space, $\mathcal{C}$ a locally finite cover of $X$, $A\subseteq X$ compact. Then there is an open set $U\subseteq X$, such that $X\subseteq U$ and $U$ intersects with only finitely many elements of $\mathcal{C}$.
+    Let $X$ be a topological space, $\mathcal{C}$ a locally finite cover of $X$, $A\subseteq X$ compact. Then there is an open set $U\subseteq X$, such that $A\subseteq U$ and $U$ intersects with only finitely many elements of $\mathcal{C}$.
 \end{lem}
 
 \begin{proof}
@@ -340,7 +346,7 @@ Let $M$ be a smooth manifold, $f$ a continuous, real valued function on $M$, whi
 \end{thm}
 
 \begin{proof}
-    Let $h$ be the smooth extension of $f|_A$ in Lemma \ref{extend}. $U_A$ be a neighborhood of $A$ on which $|f-h|<\epsilon/2$. Then $\{U_A, M\backslash A\}$ is an open cover of $M$. Apply Theorem \ref{approx1}, let $g_1$ be a smooth function on $M\backslash A$ such that $|g_1-f|<\epsilon/2$.  Now apply Theorem \ref{pu} part 2 to the abovementioned open cover, and let $g=f_{U_A}h+f_{M\backslash A}g_1$.
+    Let $h$ be the smooth extension of $f|_A$ in Lemma \ref{extend}. $U_A$ be a neighborhood of $A$ on which $|f-h|<\epsilon/2$. Then $\{U_A, M\backslash A\}$ is an open cover of $M$. Apply Theorem \ref{approx1}, let $g_1$ be a smooth function on $M\backslash A$ such that $|g_1-f|<\epsilon/2$.  Now apply Theorem \ref{pu} part 2 to the above-mentioned open cover, and let $g=f_{U_A}h+f_{M\backslash A}g_1$.
 \end{proof}
 
 
@@ -348,6 +354,9 @@ Let $M$ be a smooth manifold, $f$ a continuous, real valued function on $M$, whi
 \newpage
 
 \section{Rank Theorem, Immersion, submersion and embedding}
+\label{sec:rank}
+
+{\em Chapters 4 and 5 of the textbook}\\
 
 The goal of this section is to study the {\em local normal form} of a smooth map between smooth manifolds.\\
 
@@ -383,13 +392,23 @@ There are many ways to prove inverse function theorem, e.g. by finding a fixed p
     Without loss of generality we can assume $M$ and $N$ be open subsets of $\mathbb{R}^n$ and $\mathbb{R}^n$ containing the origin, $f=(f_1, \dots, f_n)$ sends the origin to origin, and its derivative at origin is $\left[\begin{array}{cc} I_r & 0\\ 0 & 0\end{array}\right]$. Apply Theorem \ref{inv} to the map $i: M\rightarrow \mathbb{R}^m$ defined as 
     \[i(x_1, \dots, x_m)=(f_1, \dots, f_r, x_{r+1}, \dots, x_m)\]
     Then $i$ is a local diffeomorphism around the origin hence a local coordinate chart after restriction. Let 
-    \[H_j(y_1, \dots, y_n)=f_j(i^{-1}(y_1, \dots, y_r, 0, \dots))\]
-    Then 
-    \[j(y_1, \dots, y_n)=(y_1, \dots, y_r, y_{r+1}-H_{r+1}, \dots, y_n-H_n)\]
-    To show that $j\circ f\circ i^{-1}$ is the required map, note that 
-    \[f\circ i^{-1}(y_1, \dots, y_r, x_{r+1}, \dots,  x_m)=f\circ i^{-1}(y_1, \dots, y_r, 0, \dots, 0)\]
-    because $f\circ i^{-1}$ is rank $r$ which implies that $\partial (f_l\circ i^{-1})/\partial x_k=0$ for $l, k>r$.
+    \[H_j(y_1, \dots, y_r)=f_j(i^{-1}(y_1, \dots, y_r, 0, \dots))\]
+    By assumption the function $f\circ i^{-1}$ is rank $r$ in a neighborhood of $0$, and $f\circ i^{-1}(x_1, x_m)=(x_1, \dots, x_r, f_{r+1}\circ i^{-1}, \dots, f_m\circ i^{-1})$, by linear algebra, if $l, k>r$ then 
+    \[{\partial(f_l\circ i^{-1})\over \partial x_k}=0\]
+    Hence 
+    \[f\circ i^{-1}(x_1, \dots, x_m)=(H_1(x_1, \dots, x_r), \dots, H_m(x_1, \dots, x_r))\]
+    Now we can let 
+    \[j(y_1, \dots, y_n)=(y_1, \dots, y_r, y_{r+1}-H_{r+1}(y_1, \dots, y_r), \dots, y_n-H_n(y_1, \dots, y_r))\]
+    and finish the proof.
 \end{proof}
+
+\begin{rmk}
+    When $m>n=r$, the first half of the proof above implies the implicit function theorem below:
+\end{rmk}
+
+\begin{thm}[Implicit Function Theorem]\label{implicit}
+    Let $L$, $M$, $N$ be smooth manifolds, $\dim(M)=\dim(N)$, $f: L\times M\rightarrow N$
+is smooth, and on some point $(a, b)\in L\times M$, the rank of $f(a, \cdot)$ has rank $\dim(M)$ at $b$. Let $c=f(a, b)$. Then, there is a neighborhood $U$ of $a$, a neighborhood $V$ of $b$, a function $g: U\rightarrow V$ that sends $a$ to $b$, such that on $U\times V$, $f(x, y)=c$ iff $y=g(x)$.\end{thm}\qed
 
 \begin{dfn}
     A smooth map $f: M\rightarrow N$ is called
@@ -405,19 +424,111 @@ There are many ways to prove inverse function theorem, e.g. by finding a fixed p
     Open submanifolds are special cases of embedded submanifolds.
 \end{rmk}
 
+\begin{exm}
+\begin{itemize}
+\item The map $f: \mathbb{R}^2\rightarrow \mathbb{R}$ defined as $(x, y)\mapsto x-y^2$ is a submersion.
+\item The map $f: \mathbb{R}\rightarrow \mathbb{R}^2$ defined as $x\mapsto (x, x^3)$ is an embedding.
+\item The unit sphere in $\mathbb{R}^{n+1}$ is an embedded submanifold.
+\end{itemize}
+\end{exm}
+
+\begin{exm}
+    Let $M=\mathbb{R}^2$, $A=\{(x, y): y^2=x^2(x+1)\}$ is the image of an immersion (e.g. $\mathbb{R}\rightarrow \mathbb{R}^2$ defined as $t\mapsto (t^2-1, t^3-t)$) but not the image of an embedding.
+\end{exm}
+
 \begin{thm}
     Let $M$ be a smooth manifold, $A\subseteq M$. The followings are equivalent:
     \begin{enumerate}
         \item $A$ is an embedded submanifold of dimension $r$
-        \item For every $p\in A$, there is a coordinate chart $i_p: U_p\rightarrow V_p$, such that $p\in U_p$, $i_p(p)=0\in V_p$, and $i_p(A)$ is an open subset of the subspace of $\mathbb{R}^{\dim(M)}$ spanned by the first $r$ coordinate vectors.
+        \item For every $p\in A$, there is a coordinate chart $i_p: U_p\rightarrow V_p$, such that $p\in U_p$, $i_p(p)=0\in V_p$, and $i_p(A\cap U_p)$ is an open subset of the subspace of $\mathbb{R}^{\dim(M)}$ spanned by the first $r$ coordinate vectors.
         \item For every $p\in A$, there is an open neighborhood $U_p$, a smooth submersion $h$ from $U_p$ to $\mathbb{R}^{\dim(M)-r}$, such that $A\cap U_p=h^{-1}(0)$.
     \end{enumerate}
 \end{thm}
+
+\begin{proof}
+$1\implies 2$: Apply rank theorem to the embedding map. Shrink $V$ if needed.\\
+
+$2\implies 3$: Use the same $U_p$ in 2, let $h$ be the projection to the last $\dim(M)-r$ coordinates.\\
+
+$3\implies 2$: Apply rank theorem to $h$.\\
+
+$2\implies 1$: Because $M$ is a manifold, $A$ with subspace topology is Hausdorff and second countable. Condition 2 implies that $A$ is locally Euclidean, and one can further verify that $i_p|_{A\cap U_p}$ composed with the projection to the first $r$ coordinates form a smooth atlas on $A$.
+\end{proof}
+
+\begin{rmk}
+    The condition that the rank is locally constant is needed, for example, consider map $f: \mathbb{R}^2\rightarrow \mathbb{R}^2$ defined as $f(x, y)=(x, yx^2)$, and $p=(0, 0)$.
+\end{rmk}
+
+\begin{rmk}
+    The proof above implies that if $A\subseteq M$ is an embedded submanifold then the smooth structure on $A$ that makes inclusion map an embedding is unique.
+\end{rmk}
+
+\begin{exm}
+    $\{[x_0:x_1:x_2]\in\mathbb{CP}^2: x_2^2x_0-x_1^3+x_1x_0=0\}$ is an embedded submanifold of $\mathbb{CP}^2$.
+\end{exm}
+
+\begin{exm}
+    Classical matrix groups like $SL$, $SO$, $O$, $U$, $SU$, $SP$ etc are all embedded submanifolds of the corresponding general linear group.
+\end{exm}
+
+\begin{exm}
+    $\left\{\left[\begin{array}{cc}e^it & 0\\ 0 & e^i\pi t\end{array}\right]: t\in\mathbb{R}\right\}$ is the image of an injective immersion but not an embedded submanifold, because $\pi$ is irrational.
+\end{exm}
 
 
 \newpage
 
 \section{Manifold with boundary}
+
+{\em Section 1.4 of textbook}
+
+\begin{dfn}
+    \begin{itemize}
+        \item A topological {\bf manifold with boundary} of dimension $n$ is a Hausdorff, second countable space where each point has a neighborhood that is homeomorphic to either a disc or a half disc. Let $M$ be a topological manifold with boundary, $p\in M$, if any neighborhood of $p$ can only be homeomorphic to a half disc but not a disc, we call it a {\bf boundary point}. 
+        \item A {\bf smooth manifold with corner} is a topological manifold $M$ with boundary with a smooth structure, i.e. a smooth atlas such that the codomains are open subsets of $[0, \infty)^r\times\mathbb{R}^{n-r}$. If one can make all $r\leq 1$, we call $M$ with this smooth structure is a {\bf smooth manifold with boundary}.
+    \end{itemize}
+\end{dfn}
+
+\begin{exm}
+    The {\bf closed ball} $\{(x_1, \dots, x_n)\in\mathbb{R}^n:\sum_{i=1}^n x_i^2\leq 1\}$ can be made into a smooth manifold with boundary via the default smooth structure on $\mathbb{R}^n$.
+\end{exm}
+
+\begin{rmk}
+    \begin{itemize}
+        \item Let $M$ be a smooth manifold of dimension $m$, $N\subseteq M$ an embedded submanifold of dimension $m-1$, then one can ``cut open'' $M$ along $N$ to get a smooth manifold with boundary.
+        \item Let $M$ be a smooth manifold with boundary, one can glue two copies of $M$ at the boundary to get a manifold without boundary, the original boundary set became an embedded submanifold. This is called {\bf doubling}.
+    \end{itemize}
+\end{rmk}
+
+\newpage
+
+\section{Vector Bundles, Tangent Bundles, Cotangent Bundles}
+
+{\em Chapters 3 and 10 of the textbook}\\
+
+In Section \ref{sec:rank} we know that if $f: M\rightarrow N$ is a smooth map between smooth manifolds, $p\in M$, $i$ a chart defined on a neighborhood of $p$ and $j$ a chart defined on a neighborhood of $f(p)$, then the rank of $D(j\circ f\circ i^{-1})$ is independent of the choice of $i$ and $j$, yet the matrix it self does depend on the choice of these coordinates. To have a well defined concept of ``derivative'' on manifolds one need to introduce the concept of {\bf bundles}.
+
+\begin{dfn}
+    Let $M$ be a smooth manifold. A rank $d$-{\bf vector bundle} on $M$ is a smooth manifold $E$, a submersion $\pi: M\rightarrow E$, such that:
+\begin{enumerate}
+    \item 
+\end{enumerate}
+
+  
+\end{dfn}
+
+%\begin{dfn}
+%    Given a vector bundle $(\mathcal{C}, \{i_{U, V}\})$, let
+%    \[E=\left(\bigsqcup_{U\in\mathcal{C}}U\times\mathbb{R}^n\right)/\sim\]
+%    such that $(p, u)\in U\times\mathbb{R}^n$ and $(p, v)\in U'\times\mathbb{R}^n$ are equivalent under $\sim$ iff $v=i_{U, V}(p)u$. $E$ is called the {\bf total space}. Let $\mathcal{A}$ be a smooth atlas on $M$, 
+%\end{dfn}
+
+
+%\begin{rmk}
+%    Sometimes by ``vector bundle'' we mean the total space $E$, or the pair $(E, \pi)$.
+%\end{rmk}
+
+\newpage
 
 \appendix
 
@@ -438,6 +549,8 @@ Answer: Identify $\mathbb{R}^2$ with $\mathbb{C}$, then the map $\mathbb{C}^2\ri
 
 1. Let $A$, $B$ be two disjoint non-empty compact sets in $\mathbb{R}^n$. Show that there is a smooth function $f$ on $\mathbb{R}^n$, such that $0\leq f\leq 1$, and $f|_A=0, f|_B=1$. (Hint: you can first get a continuous function then smoothen it via convolution.)\\
 
+Answer: One can follow the hint, or use partition of unity on the cover $\{\mathbb{R}^n\backslash A, \mathbb{R}^n\backslash B\}$.\\
+
 2. Let $M$ be the set of $2$ dimensional sub spaces of the $4$ dimensional real vector space $\mathbb{R}^4$. Pick any 2-dimensional subspace $H$, identify it with $\mathbb{R}^2$ via a linear bijection $\phi_H: H\rightarrow \mathbb{R}^2$, and two vectors $u$ and $v$ in $\mathbb{R}^4\backslash H$ which are linearly independent, and $u, v, H$ together span $\mathbb{R}^4$. Let 
 \[U_{u, v, H}=\{W\in M: \text{ there exist }a_W, b_W\in H, W\cap (u+H)=\{u+a_W\},\]
 \[W\cap (v+H)=\{v+b_W\}\}\]
@@ -447,7 +560,25 @@ and be defined as
 \[i_{u, v, H}(W)=(\phi_H(a_W), \phi_H(b_W))\]
 such that
 \[W\cap (u+H)=\{u+a_W\}, W\cap (v+H)=\{v+b_W\}\]
-Show that $M$ has a smooth manifold structure such that $\{i_{u, v, H}\}$ is a smooth atlas. This smooth manifold M is called the Grassmannian $Gr_2(\mathbb{R}^4)$
+Show that $M$ has a smooth manifold structure such that $\{i_{u, v, H}\}$ is a smooth atlas. This smooth manifold $M$ is called the Grassmannian $Gr_2(\mathbb{R}^4)$\\
+
+Answer: By linear algebra these maps are bijections, and satisfy all four conditions in Theorem \ref{patch}. For Condition (2), these functions are rational hence smooth; for condition (3), let $u$, $v$ be two of the four standard basis vectors and $H$ be spanned by the remaining two basis vectors, then these finitely many $U_{u, v, H}$ covers $M$. For condition (4), given any two 2-dimensional subspaces $L$, $L'$, let $H$ be a 2-dimensional subspace which intersects with both $L$ and $L'$ only at the origin, and let $\{u, v\}$ be a basis of $H^\perp$.
+
+\subsection{Week 3}
+
+1. Let $M$ be the 3-dimensional unit sphere in $\mathbb{R}^4$. Write down an open cover $C$ of $M$ by domains of coordinate charts. Write down a compactly supported, non negative smooth function $f_U$ for each $U\in C$, such that the support of $f_U$ is contained in $U$, and the sum of $f_U$ equals $1$.\\
+
+Answer: $\{M\backslash \{(1, 0, 0, 0)\}, M\backslash \{(-1, 0, 0, 0)\}\}$. The two $f_U$ are $g_0/(g_0+g_1)$ and $g_1/(g_0+g_1)$, such that
+\[g_0(x_1, x_2, x_3, x_4)=\begin{cases}e^{1/(x_1-1/2)} & x<1/2\\ 0 & x\geq 1/2\end{cases}\]
+\[g_1(x_1, x_2, x_3, x_4)=g_0(-x_1, x_2, x_3, x_4)\]
+
+2. Let $A$ be a non-empty subset of a smooth manifold $M$. Show that if every smooth function on $A$ can be extended to a smooth function on $M$, then $A$ is closed.\\
+
+Answer: Let $d$ be the dimension of $M$. Suppose $A$ is not closed, then there is some $p\in M$ such that $p\not\in A$ and $p\in\overline{A}$. Pick a coordinate chart $i: U\rightarrow V\subseteq\mathbb{R}^d$ such that $p\in U$ and $i(p)=0$, let $f_U$ be a smooth function on $M$ such that $f_U(p)=1$ and $supp(f_U)\subseteq U$, let $g:V\rightarrow \mathbb{R}$ be defined as $g(x_1, \dots, x_d)=1/(x_1^2+\dots+x_d^2)$, and consider function $h(p)=\begin{cases}0 & p\not\in U\\ f_U(p)g(i(p)) & p\in U$ which is smooth on $M\backslash \{p\}$, then $h|_A$ is a smooth function on $A$ which can not be extended to $M$.
+
+\subsection{Week 4}
+
+Find all possible real numbers $a$ and $b$ such that $\{(x,y)\in\mathbb{R}^2:y^2=x(x2+ax+b)\}$ is an embedded submanifold of $\mathbb{R}^2$.
 
 \newpage
 
