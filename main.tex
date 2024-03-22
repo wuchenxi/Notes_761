@@ -436,6 +436,10 @@ is smooth, and on some point $(a, b)\in L\times M$, the rank of $f(a, \cdot)$ ha
     Let $M=\mathbb{R}^2$, $A=\{(x, y): y^2=x^2(x+1)\}$ is the image of an immersion (e.g. $\mathbb{R}\rightarrow \mathbb{R}^2$ defined as $t\mapsto (t^2-1, t^3-t)$) but not the image of an embedding.
 \end{exm}
 
+\begin{exm}
+    The map $t\mapsto (t^2-1, t^3-t)$ from $(-1, \infty)$ to $\mathbb{R}^2$ is an injective immersion but not an embedding.
+\end{exm}
+
 \begin{thm}
     Let $M$ be a smooth manifold, $A\subseteq M$. The followings are equivalent:
     \begin{enumerate}
@@ -472,7 +476,7 @@ $2\implies 1$: Because $M$ is a manifold, $A$ with subspace topology is Hausdorf
 \end{exm}
 
 \begin{exm}
-    $\left\{\left[\begin{array}{cc}e^it & 0\\ 0 & e^i\pi t\end{array}\right]: t\in\mathbb{R}\right\}$ is the image of an injective immersion but not an embedded submanifold, because $\pi$ is irrational.
+    $\left\{\left[\begin{array}{cc}e^it & 0\\ 0 & e^i\pi t\end{array}\right]: t\in\mathbb{R}\right\}$ is the image of an injective immersion but not an embedded submanifold, because $\pi$ is irrational which implies that the image is not locally connected.
 \end{exm}
 
 
@@ -502,34 +506,432 @@ $2\implies 1$: Because $M$ is a manifold, $A$ with subspace topology is Hausdorf
 
 \newpage
 
-\section{Vector Bundles, Tangent Bundles, Cotangent Bundles}
+\section{Vector Bundles}
 
-{\em Chapters 3 and 10 of the textbook}\\
+{\em Chapters 10 of the textbook}\\
 
 In Section \ref{sec:rank} we know that if $f: M\rightarrow N$ is a smooth map between smooth manifolds, $p\in M$, $i$ a chart defined on a neighborhood of $p$ and $j$ a chart defined on a neighborhood of $f(p)$, then the rank of $D(j\circ f\circ i^{-1})$ is independent of the choice of $i$ and $j$, yet the matrix it self does depend on the choice of these coordinates. To have a well defined concept of ``derivative'' on manifolds one need to introduce the concept of {\bf bundles}.
 
-\begin{dfn}
-    Let $M$ be a smooth manifold. A rank $d$-{\bf vector bundle} on $M$ is a smooth manifold $E$, a submersion $\pi: M\rightarrow E$, such that:
+\begin{dfn}\label{vb}
+    Let $M$ be a smooth manifold. A (smooth) rank $d$-{\bf real vector bundle} over $M$ (called the {\bf base}) is a smooth manifold $E$ (called the {\bf total space}), a smooth map $\pi: E\rightarrow M$, such that there is an open cover $\mathcal{C}$ of $M$, and
 \begin{enumerate}
-    \item 
+    \item For any $U\in\mathcal{C}$, there is a diffeomorphism (called a {\bf trivialization}): $j_U: \pi^{-1}(U)\rightarrow U\times\mathbb{R}^d$, such that $j_U(q)=(\pi(q), \cdot)$. (In other words, if $\pi_1: U\times \mathbb{R}^d\rightarrow U$ is the projection to the first factor $\pi_1(p, v)=p$, then $\pi_1\circ j_U=\pi|_{\pi^{-1}(U)}$.)
+    \item For any two $U, U'\in\mathcal{C}$, if $U\cap U'\not=\emptyset$, then there is some smooth map $t_{U', U}: U\cap U'\rightarrow GL(d, \mathbb{R})$, called {\bf transition function}, such that for any $p\in U\cap U'$, $v\in\mathbb{R}^d$, $j_{U'}(j_U(p, v))=(p, t_{U', U}(p)v)$.
 \end{enumerate}
+  For any $p\in M$, the preimage $\pi^{-1}(p)$ is called a {\bf fiber}, denoted as $E_p$. One can also define complex vector bundles analogously.
+\end{dfn}  
 
-  
+\begin{rmk}
+    $E_p$ has vector space structure inherited from the trivialization maps.
+\end{rmk}
+
+\begin{rmk}
+  If the transition function factors through some Lie group homomorphism $G\rightarrow GL(d)$ then we call it a $G$-bundle. It is clear that a rank $d$ complex bundle is a rank $2d$ $GL(d, \mathbb{C})$-real bundle, where the homomorphism from $GL(d, \mathbb{C})$ to $GL(2d, \mathbb{R})$ is by identifying $\mathbb{C}^d$ with $\mathbb{R}^{2d}$.
+\end{rmk}
+
+\begin{exm}
+    $M\times\mathbb{R}^d$ with the projection map is a vector bundle, called {\bf trivial bundle}. The corresponding $t_{U', U}$ can be chosen to be constant function $I_d$.
+\end{exm}
+
+\begin{exm}
+    Let $M=\mathbb{CP}^n$ which we identify with 1-dimensional complex subspaces of $\mathbb{C}^{n+1}$, let $E=\{(p, q)\in \mathbb{CP}^n\times\mathbb{C}^{n+1}: q\in p\}$, $\pi: (p, q)\mapsto p$. $(E, p)$ is called the {\bf tautological line bundle}, denoted as $\mathcal{O}(-1)$.
+\end{exm}
+
+
+\begin{dfn}
+    Let $(E, \pi: E\rightarrow M)$, $(E', \pi': E'\rightarrow M')$ be two vector bundles, a {\bf bundle homomorphism} is a smooth map $g: E\rightarrow E'$, such that there is a smooth map $f: M\rightarrow M'$ such that:
+    \begin{itemize}
+    \item $\pi'\circ g=f\circ \pi$
+    \item For every $q\in E$, there is a trivialization $j: \pi^{-1}(U_q)\rightarrow U_q\times\mathbb{R}^d$, $j': \pi'^{-1}(U_{g(q)})\rightarrow U_{g(q)}\times\mathbb{R}^d$, such that $\pi(q)\in U_q\subseteq M$, $\pi'(g(q))\in U_{g(q)}\subseteq M'$, and there is a matrix $A\in M_{d\times d}(\mathbb{R})$ such that $j\circ g\circ j^{-1}(\pi(q), v)=(\pi'(g(q)), Av)$ (in other words, it is linear on the fiber).
+    \end{itemize}
+    If $M=M'$ and $f=id_M$ we call it a {\bf bundle homomorphism over $M$}. By Theorem \ref{rank} one can show that if a bundle homomorphism is bijective then its inverse is also a bundle homomorphism, and we call it a {\bf bundle isomorphism}. Similarly we can define {\bf bundle isomorphism over $M$}.
 \end{dfn}
 
-%\begin{dfn}
-%    Given a vector bundle $(\mathcal{C}, \{i_{U, V}\})$, let
-%    \[E=\left(\bigsqcup_{U\in\mathcal{C}}U\times\mathbb{R}^n\right)/\sim\]
-%    such that $(p, u)\in U\times\mathbb{R}^n$ and $(p, v)\in U'\times\mathbb{R}^n$ are equivalent under $\sim$ iff $v=i_{U, V}(p)u$. $E$ is called the {\bf total space}. Let $\mathcal{A}$ be a smooth atlas on $M$, 
-%\end{dfn}
+\begin{rmk}\label{tvb}
+By Theorem \ref{patch}, to specify a real rank $d$ vector bundle over a smooth manifold $M$, one needs only the following data:
+\begin{enumerate}
+    \item An open cover $\mathcal{C}$ of $M$.
+    \item For any $U, U'\in \mathcal{C}$, if $U\cap U'\not=\emptyset$, there is a smooth map $t_{U', U}: U\cap U'\rightarrow GL(d, \mathbb{R})$
+\end{enumerate}
+such that
+\begin{enumerate}
+    \item $t_{U, U}\equiv I_d$
+    \item If $U\cap U'\cap U''\not=\emptyset$, then on $U\cap U'\cap U''$, $t_{U'', U}(p)=t_{U'', U'}(p)t_{U', U}(p)$ (cocycle condition).
+\end{enumerate}
+If $(E, \pi)$ is a vector bundle, it is evident that the $t_{U', U}$ in Definition \ref{vb} satisfy the two conditions above. If we have functions $t_{U', U}$ that satisfy the conditions above, consider disjoint unions of $U\times\mathbb{R}^d$, glue them together using $t_{U', U}$ (the two conditions above implies that this gluing is via an equivalence relation), then apply Theorem \ref{patch} to a refinement of the cover $\mathcal{C}$.
+\end{rmk}
 
-
-%\begin{rmk}
-%    Sometimes by ``vector bundle'' we mean the total space $E$, or the pair $(E, \pi)$.
-%\end{rmk}
+\begin{rmk}
+    Two sets of transition functions $t_{U', U}$, $t'_{U', U}$ gives vector bundles that are isomorphic over $M$ iff for every $U\in\mathcal{C}$, there is a smooth map $s_U: U\rightarrow GL(d, \mathbb{R})$, such that $t'_{U', U}(p)=s_{U'}(p)t_{U', U}(s_{U}(p))^{-1}$, which is called the ``coboundary condition''.
+\end{rmk}
 
 \newpage
 
+\section{Tangent Bundles, Cotangent Bundles}
+
+{\em Section 3 and 11 of textbook}\\
+
+\begin{dfn}
+    Let $M$ be a smooth manifold of dimension $n$, let $\mathcal{A}=\{i_\alpha: U_\alpha\rightarrow V_\alpha\}$ be a smooth atlas, $\mathcal{C}$ be the domains of coordinate charts in $\mathcal{A}$, for every $U\in\mathcal{C}$, there is a unique chart $i_U: U\rightarrow V\subseteq\mathbb{R}^n$
+    \begin{itemize}
+    \item If $t_{VU}(p)=D(i_V\circ i_U^{-1})|_{i_U(p)}$, the resulting bundle (via Remark \ref{tvb}) is called the {\bf tangent bundle}, denoted as $T(M)$ or $TM$.
+    \item If $t_{VU}(p)=(D(i_U\circ i_V^{-1})|_{i_V(p)})^T$, the resulting bundle is called the {\bf cotangent bundle}, denoted as $T^*(M)$ or $T^*M$.
+    \end{itemize}
+    The fibers of $TM$ and $T^*M$ on $p\in M$ are called {\bf tangent space} and {\bf cotangent space}, denoted as $T_p(M)$ (or $T_pM$) and $T^*p(M)$ (or $T^*_pM$), their elements are called {\bf tangent vectors} and {\bf cotangent vectors} respectively. 
+\end{dfn}
+
+To understand these bundles geometrically we need coordinate-free ways to describe their elements:
+
+\begin{thm}\label{coordfree1}
+    Let $M$ be a smooth manifold of dimension $n$, $C^\infty(M)$ is the vector space of real valued smooth functions. For any $p\in M$, let $N_p$ be the subspace consisting of functions whose rank at $p$ is $0$. Then there is a bijection from the disjoint union of $C^\infty(M)/N_p$ for all $p\in M$ to $T^*(M)$, such that the map from each $C^\infty(M)/N_p$ to cotangent space $T^*_p(M)$ is linear.
+\end{thm}
+
+\begin{proof}
+    Recall from Remark \ref{tvb}, $T^*(M)$ can be seen as a quotient of the disjoint union of $U\times\mathbb{R}^n$ where $U\in\mathcal{C}$. Pick some $U$ containing $p$, define the map as \[(p, [f])\mapsto (p, (D(f\circ i_U^{-1})|_{i_U(p)})^T)\in U\times\mathbb{R}^n\]
+    By chain rule and the definition of transition function of $T^*(M)$ we know that this definition is independent on the choice of $U$ (hence the map is well defined), and by linearlity of derivatives, it is linear from $C^\infty(M)/N_p$ to $T^*_p(M)$. By construction, $[f]$ get sent to $0$ iff $f\in N_p$ which shows that this is injective on each $C^\infty(M)$. Let $P_j: \mathbb{R}^n\rightarrow \mathbb{R}$ be $P_j(t_1, \dots, t_n)=t_j$, then for any $(a_1, \dots, a_n)\in \mathbb{R}^n$, consider $f=\sum_ja_j(P_i\circ i_U)$ (and then extended to $M$ by Partition of Unity (Theorem \ref{extend})), we see that this map is a surjection.
+\end{proof}
+
+\begin{dfn}
+    Let $M$ be a smooth manifold of dimension $n$, $p\in M$. We say $\gamma:I\rightarrow M$ is a smooth path starting at $p$, if $I\subseteq\mathbb{R}$ is an open set containing $0$, $\gamma$ is a smooth map and $\gamma(0)=p$. We say two such paths $\gamma$, $\gamma'$ have the same velocity at $0$, if under a coordinate chart $i_U: U\rightarrow V$ such that $p\in U$, we have $D(i_U\circ \gamma)=D(i_U\circ \gamma')$. By chain law, whether or not two paths starting at $p$ have the same velocity at $p$ doesn't depend on the choice of the chart.
+\end{dfn}
+
+\begin{thm}\label{coordfree2}
+    Let $M$ be a smooth manifold, there are bijections between:
+    \begin{itemize}
+        \item The set of equivalence class of paths starting at $p$, where two paths are equivalent iff they have the same velocity.
+        \item $(C^\infty(M)/N_p)^*$ (linear maps from $C^\infty(M)/N_p$ to $\mathbb{R}$) as in Theorem \ref{coordfree1}
+        \item $T_pM$.
+    \end{itemize}
+    As a consequence, $TM$ can be seen as either disjoint unions of the set of equivalence classes of paths starting at some $p\in M$, or disjoint unions of $(C^\infty(M)/N_p)^*$
+\end{thm}
+
+\begin{proof}
+    Recall from Remark \ref{tvb}, $T^*(M)$ can be seen as a quotient of the disjoint union of $U\times\mathbb{R}^n$ where $U\in\mathcal{C}$. Pick some $U$ containing $p$, define the two map to $T_p(M)$ as:
+    \[(p, [\gamma])\mapsto (p, D(i_U\circ \gamma)|_0)\in U\times\mathbb{R}^n\]
+    and
+    \[(p, f)\mapsto (p, (f([P_j\circ i_U])_{j=1,\dots, n}))\in U\times\mathbb{R}^n\]
+    Where functions $p_j$ are defined in the proof of Theorem \ref{coordfree1}. We can verify these are well defined bijections as in \ref{coordfree1}.
+\end{proof}
+
+\begin{rmk}
+    When there is no ambiguity, let $j_U: \pi^{-1}(U)\rightarrow U\times\mathbb{R}^d$ be a local trivialization, $p\in U$, we can write points in the fiber $j_U^{-1}(p, v)\in \pi^{-1}(p)$ as $v$.
+\end{rmk}
+
+
+\begin{exm}
+    If $M$ is an open submanifold of $\mathbb{R}^n$, $TM$ and $T^*M$ are both isomorphic over $M$ to the trivial bundle.
+\end{exm}
+
+\begin{exm}\label{s2}
+    Let $S^2$ be the unit sphere in $\mathbb{R}^3$, $S^2=\{(x_0, x_1, x_2)\in\mathbb{R}^3$. It has two coordinate charts 
+    \[i_0: \{(x_0, x_1, x_2)\in S^2: x_0\not=1\}\rightarrow \mathbb{R}^2\] 
+    \[(x_0, x_1, x_2)\mapsto (x_1/(1-x_0), x_2/(1-x_0))\]
+    \[i_1: \{(x_0, x_1, x_2)\in S^2: x_0\not=-1\}\rightarrow \mathbb{R}^2\] 
+    \[(x_0, x_1, x_2)\mapsto (x_1/(1+x_0), x_2/(1+x_0))\]
+    Hence 
+    \[i_0\circ i_1^{-1}(y_1, y_2)=i_1\circ i_0^{-1}(y_1, y_2)=(y_1/(y_1^2+y_2^2), y_2/(y_1^2+y_2^2))\]
+    The transition function of $TS^2$ is
+    \[t_{10}(i_0^{-1}(y_1, y_2))={1\over (y_1^2+y_2^2)^2}\left[\begin{array}{cc}-y_1^2+y_2^2 & -2y_1y_2\\ -2y_1y_2 & y_1^2-y_2^2\end{array}\right]\]
+    And the transition function of $T^*S^2$ is
+    \[t_{10}(i_0^{-1}(y_1, y_2))={1\over (y_1^2+y_2^2)^2}\left[\begin{array}{cc}-y_1^2+y_2^2 & -2y_1y_2\\ -2y_1y_2 & y_1^2-y_2^2\end{array}\right]\]
+    Consider point $p=(0, 1, 0)=i_0^{-1}(1, 0)\in S$, let $f(x_0, x_1, x_2)=x_0+x_2$, then 
+    \[f\circ i_0^{-1}(y_1, y_2)={y_1^2+y_2^2-1\over y_1^2+y_2^2+1}+{2y_2\over y_1^2+y_2^2+1}\]
+    So in Theorem \ref{coordfree1}, the cotangent vector $[f]$ under the trivialization associated to $i_0$ becomes $(1, 1)$, while under the trivialization associated to $i_1$ should be 
+    \[\left[\begin{array}{cc}-1 & 0 \\ 0 & 1\end{array}\right]\left[\begin{array}{c}1\\1\end{array}\right]=\left[\begin{array}{c}-1\\1\end{array}\right]\]
+    which is the derivative of 
+    \[f\circ i_1^{-1}(y_1, y_2)={1-y_1^2-y_2^2\over y_1^2+y_2^2+1}+{2y_2\over y_1^2+y_2^2+1}\]
+    at $(1, 0)$.
+\end{exm}
+
+\begin{rmk}
+    Let $p\in M$, $i: U\rightarrow V\subseteq\mathbb{R}^n$ a coordinate chart whose domain contains $p$. Then $\{[P_k\circ i]\}$ form a basis of $T^*_pM$, which we denote as $\{dx_k\}$. The dual basis in $T_p^M$ can be denoted as $\{\partial/\partial x_k\}$ or $\{\partial_k\}$. The path $\gamma_k$ corresponding to $\partial_k$ in Theorem \ref{coordfree2} can be picked as, for example, $\gamma_k(t)=i^{-1}(i(p)+te_k)$ where $e_k$ is the $k$-th standard basis in $\mathbb{R}^n$.
+\end{rmk}
+
+\begin{rmk}
+    We often write $x_k$ as $x^k$ under {\bf Einstein notation} which means summing over any index that appear as both a subscript and a superscript. Then the $k$ in $dx^k$ is a superscript while the $k$ in $\partial\over \partial x^k$ is a subscript. 
+\end{rmk}
+
+\begin{rmk}
+Theorem \ref{coordfree1} and \ref{coordfree2} imply that:
+
+\begin{enumerate}
+\item There is a canonical bilinear form on $T_pM\times T^*_pM$ defined as $(l, [f])=l([f])$ (if $T_pM$ is seen as the dual of $C^\infty/N_p$), or $([\gamma], [f])=(f\circ \gamma)'(0)$ (if $T_pM$ is seen as the set of equivalence classes of paths).
+\item A smooth map $g: M\rightarrow N$ induces a linear map $g_*: T_pM\rightarrow T_{g(p)}N$, and a linear map $g^*: T^*_{g(p)}N\rightarrow T^*_pM$, such that for every $x\in T_pM$, $a\in T^*_{g(p)}N$, 
+\[(x, g^*(a))=(g_*(x), a)\]
+(this property is called ``adjoint'').\\
+    
+These maps can be defined as
+\[g^*([f])=[f\circ g]\]
+and (when see $TM$ as equivalence classes of paths)
+\[g_*([\gamma])=[g\circ\gamma]\]
+\item We can write down $g^*$ and $g_*$ under coordinate chart as follows: let $p\in U$, $f(p)\in U'$, $i_U: U\rightarrow V\subseteq\mathbb{R}^m$ and $i_{U'}: U'\rightarrow V'\subseteq \mathbb{R}^n$ be smooth coordinate charts on $M$ and $N$ respectively, then let $e_j$ be the $j$-th standard basis vector in $\mathbb{R}^n$, we have
+\[g^*(e_j)=g^*(dy^j)=[P^j\circ i_{U'}\circ g]=
+D(P_j\circ i_U'\circ g\circ i_U^{-1})|_{i_U(p)}^T\]
+\[=\left[{\partial(i_{U'}\circ g\circ i_U^{-1})^j\over \partial x^1}, \dots, {\partial(i_{U'}\circ g\circ i_U^{-1})^j\over \partial x^m}\right]^T\]
+\[=\sum_{k=1}^m {\partial(i_{U'}\circ g\circ i_U^{-1})^j\over \partial x^k} dx^k\]
+Under Einstein's notation, this can be written as
+\[g^*dy^j={\partial y^j\over \partial x^k}dx^k\]
+where the map $i_{U'}\circ g\circ i_{U}^{-1}$ is $(x_1, \dots, x_m)\mapsto (y_1, \dots, y_n)$.\\
+
+Now let $e_j$ be the $j$-th standard basis vector of $\mathbb{R}^m$, let $\gamma_j: \mathbb{R}\rightarrow M$ be such that $\gamma_j(0)=p$, $D(i_U\circ\gamma_j)|_0=e_j$. Then we have
+\[g_*(e_j)=g_*(\partial_j)=g_*([\gamma_j])=[g\circ \gamma_j]=D(i_{U'}\circ g\circ \gamma_j)|_0\]
+\[=D(i_{U'}\circ g\circ i_U^{-1})|_{i_U(p)}e_j={\partial y^k\over \partial x^j}\partial_k\]
+Where the map $i_{U'}\circ g\circ i_U^{-1}$ is $(x_1, \dots x_m)\mapsto (y_1, \dots, y_n)$.
+
+From this we can see that $g_*$ can be made into a bundle homomorphism, and $g^*$ is a bundle homomorphism if $g$ is a diffeomorphism.
+\item By definition we have $(f\circ g)_*=f_*\circ g_*$, $(f\circ g)^*=g^*\circ f^*$.
+\end{enumerate}
+\end{rmk}
+
+\begin{exm}
+    Consider the smooth embedding map $\iota$ of the unit 2-sphere into $\mathbb{R}^3$, pick $p=(0, 1, 0)$, local coordinate chart of $S^2$ around $p$ being $(t^1, t^2)=(x^1/(1-x^0), x^2/(1-x^0))$, and local coordinate chart around $p$ in $\mathbb{R}^3$ being the identity. Then the map $(t^1, t^2)\mapsto (x^0, x^1, x^2)$ is
+\[(t^1, t^2)\mapsto \left({(t^1)^2+(t^2)^2-1\over (t^1)^2+(t^2)^2+1}, {2t^1\over (t^1)^2+(t^2)^2+1}, {2t^2\over (t^1)^2+(t^2)^2+1}\right)\]
+So 
+\[\iota_*(\partial_1)=\partial_0\]
+\[\iota_*(\partial_2)=\partial_2\]
+
+Note that $(1, 0, 0)$ and $(0, 0, 1)$ form a basis of the space of tangent vectors of $S^2$ at $(0, 1, 0)$ in Euclidean geometry. 
+\end{exm}
+\newpage
+
+\section{Sections, Vector fields and 1-forms}
+
+{\em Chapters 8, 10, 11}\\
+
+\begin{dfn}
+    Let $(E, \pi)$ be a smooth vector bundle over $M$. A {\bf smooth section} is a smooth map $s: M\rightarrow E$ such that $\pi\circ s=id_M$. A smooth section of the tangent bundle is called a {\bf vector field}, a smooth section of the cotangent bundle is called a {\bf 1-form}.
+\end{dfn}
+
+
+
+\begin{rmk}\label{coordsec}
+   Suppose $E$ is a rank $n$ smooth real vector bundle (complex bundles are similar) over smooth manifold $M$, and let $s$ be a map such that $\pi\circ s=id_M$. Then under local trivialization $j_U: \pi^{-1}(U)=U\times \mathbb{R}^n$, we have $s(M)\cap \pi^{-1}(U)=s(U)$, and $s$ is a smooth section iff $j_U(s(U))$ is the graph of some smooth map from $U$ to $\mathbb{R}^n$. In particular, under a coordinate chart a vector field is of the form $a^i\partial_i$, a $1$ form is of the form $a_idx^i$, where $a_i$ are smooth real valued functions and the two formula above are in Einstein's notation.
+\end{rmk}
+
+
+\begin{rmk}
+    Let $\alpha$, $\beta$ be smooth sections of the vector bundle $E$ over manifold $M$, $f$ a smooth function on $M$. We can define $\alpha+\beta$ as $(\alpha+\beta)(p)=\alpha(p)+\beta(p)$, $(f\alpha)(p)=f(p)\alpha(p)$. Here the addition and scalar multiplication on the right hand side is via the vector space structure on $E_p$ which we can obtain via local trivialization. This makes the set of smooth sections $\Gamma(E)$ a $C^\infty(M)$-module.
+\end{rmk}
+
+\begin{exm}\label{exmsec}
+    Let $M$ be a smooth manifold, $f$ a real valued smooth function, then $p\mapsto f+N_p$ is a smooth section of $T^*M$ (one can verify this by calculation in a coordinate chart then apply Remark \ref{coordsec}), which we denoted as $df$. Similarly, if $f: M\times\mathbb{R}\rightarrow M$ is a smooth map where $f(x, 0)=x$, then $p\rightarrow [f(p, \cdot)]$ is a smooth section of $TM$.
+\end{exm}
+
+\begin{rmk}
+   A rank $d$ vector bundle is isomorphic over $M$ to a trivial bundle iff it has $d$ sections that are linearly independent at every point.
+\end{rmk}
+
+\begin{exm}\label{ts2}
+By rotation number one can see that there are no vector field on 2-sphere $S^2$ which is everywhere non-zero. Hence $TS^2$ is non-trivial. Use the smooth atlas in Example \ref{s2}, consider the path $t\mapsto (0, \cos(t), \sin(t))$. Because the transition function between the two trivializations takes value in an angle reversing map, suppose $X$ is a section on $TS^2$ which is not zero on the path, its turning angle along the path in two trivializations must sum up to be a constant. Furthermore, because the path bound a disc, if we want $X$ to have no zero on the whole $S^2$ then both turning angles must be $0$. By doing calculation on any specific vector field we see that this sum can not be $0$, a contradiction.
+\end{exm}
+
+\begin{exm}
+    By considering the sections $g\mapsto [g\cdot \gamma(t)]$ (see Example \ref{exmsec}) one can see that any Lie group has trivial tangent bundle. Hence $TS^3=T(SU(2))$ is trivial.
+\end{exm}
+
+\begin{dfn}
+    We say a smooth vector bundle $E$ is {\bf orientable} if it has a family of trivialization such that the determinant of the value of transition function is always positive. We say $M$ is orientable iff $TM$ is an orientable vector bundle over $M$. In other words, iff it has a smooth atlas where the derivative of transition functions $i'\circ i^{-1}$ all have positive determinants.
+\end{dfn}
+
+\begin{exm}
+    By Partition of Unity Theorem \ref{pu}, any rank $1$ orientable smooth line bundle has a non-zero section hence is trivial. Another way to show this is by coboundary condition, see Practice Problems 3 in the Appendix A5.
+\end{exm}
+
+\begin{rmk}
+    Let $X$ be a smooth vector field, $\alpha$ be a 1-form, then $p\mapsto (X(p), \alpha(p))$ is a real valued smooth function on $M$. 
+\end{rmk}
+
+\begin{rmk}
+    If $g: M\rightarrow N$ is a smooth map, $\alpha$ a smooth section of $T^*N$, then $p\mapsto g^*(\alpha(g(p)))$ is a smooth section of $T^*M$, denoted as $g^*(\alpha)$.
+\end{rmk}
+
+
+\newpage
+
+\section{Operations on Set of Bundles, Riemannian metrics}
+
+{\em Chapters 10, 12}\\
+
+Let $X$, $Y$ and $Z$ be three sets, $f: X\rightarrow Z$, $g: Y\rightarrow Z$ two maps, the {\bf fiber product} is a subset of $X\times Y$ defined by $X\times_Z Y=\{(x, y)\in X\times Y: f(x)=g(y)\}$, with maps $p_1: X\times_Z Y\rightarrow X$ defined by $(x, y)\mapsto x$ and $p_2: X\times_Z Y\rightarrow Y$ defined by $(x, y)\mapsto y$. Then $f\circ p_1=g\circ p_2$. Furthermore, for any set $W$, any maps $a: W\rightarrow X$ and $b: W\rightarrow Y$ such that $f\circ a=g\circ b$, there is a unique $h: W\rightarrow X\times_Z Y$ such that $a=p_1\circ h$, $b=p_2\circ h$. Actually, $h$ can be written as $w\mapsto (a(w), b(w))$.
+
+\begin{dfn}\label{pullback}
+Let $f: M\rightarrow N$ be a smooth map, $(E, \pi)$ a smooth vector bundle on $N$. Then the {\bf pullback} of $E$, denoted as $f^*E$, has total space the fiber product between $M$ and $E$: $\{(x, q)\in M\times E: f(x)=\pi(q)\}$, and the projection is $(x, q)\mapsto x$.
+\end{dfn}
+
+\begin{rmk}
+    It is easy to show that $f^*E$ is a smooth vector bundle on $M$: $f^*E$ is an embedded submanifold of $M\times E$ (which we can verify via coordinate charts), hence is a smooth manifold. If $E$ has a local trivialization associated with an open cover $\mathcal{C}$ of $N$, where the transition functions are $\{t_{VU}\}$, then $f^*E$ has a local trivialization associated with cover $\{f^{-1}(U): U\in\mathcal{C}\}$, with transition functions $t'_{f^{-1}(V)f^{-1}(U)}=t_{VU}\circ f$.
+\end{rmk}
+
+\begin{rmk}
+    If $f: M\rightarrow N$, $g: N\rightarrow L$ are smooth, $E$ a smooth vector bundle on $L$, then by Definition \ref{pullback}, $(g\circ f)^*E=f^*(g^*E)$.
+\end{rmk}
+
+\begin{exm}
+\begin{itemize}
+    \item If $f$ is an injection, $E$ a bundle over $N$, $\pi: E\rightarrow N$, then $f^*E=\pi^{-1}(M)$. If $E=TN$ we denote this $f^*(E)$ as $T_M N$.
+    \item If $f$ is constant function sending every point to $c\in N$, then $f^*(E)$ is trivial bundle $N\times E_c$.
+\end{itemize}
+\end{exm}
+
+Recall that if $V$ and $W$ are vector spaces over a field $k$ (for our course, $k=\mathbb{R}$ or $\mathbb{C}$), then
+\begin{itemize}
+    \item The {\bf dual} of $V$ is the vector space consisting of linear transformations from $V$ to $k$, with addition and scalar multiplication defined as $(af)(x)=a(f(x))$, $(f+f')(x)=f(x)+f'(x)$. This space is denoted as $V^*$.  
+    \begin{itemize}
+        \item There is a canonical bilinear pairing $V^*\times V\rightarrow k$ defined as $(f, x)=f(x)$.
+        \item If $\psi: V\rightarrow V'$ is a linear map, there is an induced linear map $\psi^*: V'^*\rightarrow V^*$, defined as $\psi^*(f)=f\circ \psi$. 
+        \item $(\psi\circ \psi')^*=\psi'^*\circ \psi^*$, $(id_V)^*=id_{V^*}$.
+        \item If $\psi$ is an isomorphism so is $\psi^*$.
+    \end{itemize}
+    \item The {\bf direct sum} (or {\bf direct product}) $V\oplus W$ is the vector space consisting of elements in the Cartesian product $V\times W$, such that addition and scalar multiplication are defined as
+    \[(v, w)+(v', w')=(v+v', w+w'), r(v, w)=(rv, rw)\]
+    \begin{itemize}
+        \item There are canonical isomorphisms between $V\oplus W$ and $W\oplus V$, and between $(V\oplus V')\oplus V''$ and $V\oplus(V'\oplus V'')$.
+        \item If $f: V\rightarrow V'$, $g: W\rightarrow W'$ are linear maps, then there is a linear map $f\oplus g: V\oplus W\rightarrow V'\oplus W'$ defined as $(f\oplus g)(v, w)=(f(v), g(w))$. 
+        \item $id_V\oplus id_W=id_{V\oplus W}$, $(f\circ f')\oplus (g\circ g')=(f\oplus g)\circ (f'\oplus g')$.
+        \item If both $f$ and $g$ are isomorphisms then so is $f\oplus g$.
+    \end{itemize}
+    \item The {\bf Tensor Product} $V\otimes W$ (or $V\otimes_kW$) is defined as
+    \[V\otimes W=span_k(V\times W)/span_k(\{a(v, w)-(av, w), a(v, w)-(v, aw),\]
+    \[(v+v', w)-(v, w)-(v', w), (v, w+w')-(v, w)-(v, w'):a\in k, \]
+    \[v, v'\in V, w, w'\in W\})\]
+    The element represented by $(v, w)$ in $V\otimes W$ is denoted as $v\otimes w$.
+    \begin{itemize}
+        \item There is a bilinear map $i: V\times W\rightarrow V\otimes W$ defined as $(v, w)\mapsto v\otimes w$. For any bilinear map $q: V\times W\rightarrow L$, there is a linear map $q': V\otimes W\rightarrow L$ such that $q=q'\circ i$. 
+        \item If $\{a_i\}$ is a basis of $V$, $\{b_j\}$ a basis of $W$, then a basis of $V\otimes W$ is $\{a_i\otimes b_j\}$.
+        \item There are canonical isomorphisms between $V\otimes W$ and $W\otimes V$, and between $(V\otimes V')\otimes V''$ and $V\otimes(V'\otimes V'')$.
+        \item If $f: V\rightarrow V'$, $g: W\rightarrow W'$ are linear maps, then there is a linear map $f\otimes g: V\otimes W\rightarrow V'\otimes W'$ defined as $(f\otimes g)(v\otimes w)=f(v)\otimes g(w)$. 
+        \item $id_V\otimes id_W=id_{V\otimes W}$, $(f\circ f')\otimes (g\circ g')=(f\otimes g)\circ (f'\otimes g')$.
+        \item If both $f$ and $g$ are isomorphisms then so is $f\otimes g$.
+    \end{itemize}
+    \item If $f: V\rightarrow W$ is a linear map, $\ker(f)=\{v\in V: f(v)=0\}$.
+    \begin{itemize}
+        \item If $f: V\rightarrow W$, $f': V'\rightarrow W'$, $g_1: V\rightarrow V'$, $g_2: W\rightarrow W'$ satisfies $g_2\circ f=f'\circ g_1$, then $g_1|_{\ker(f)}$ sends $\ker(f)$ to $\ker(f')$.
+        \item If $g_1$ and $g_2$ are both isomorphisms, $g_1|_{\ker(f)}: \ker(f)\rightarrow \ker(f')$ is also an isomorphism.
+    \end{itemize}
+\end{itemize}
+
+\begin{rmk}
+    $V\otimes(W+W')\cong V\otimes W+V\otimes W'$, $V\oplus 0\cong 0\oplus V\cong V$, $V\otimes k\cong k\otimes V\cong V$.
+\end{rmk}
+
+\begin{exm}
+    The space of linear transformations from $V$ to $W$, denoted as $Hom_k(V, W)$, is isomorphic to $V^*\otimes W$.
+\end{exm}
+
+\begin{dfn}
+    \begin{itemize}
+        \item Let $E$ be a smooth real vector bundle of rank $d$ over manifold $M$, the {\bf dual bundle} $E^*=\sqcup_{x\in M}(E_x)^*$, $\pi'$ sends elements of $(E_x)^*$ to $x$, with smooth structure derived from local trivializations defined as follows: let $j_U: \pi^{-1}(U)\rightarrow U\times\mathbb{R}^d$ be a local trivialization of $E$, then we define
+        \[j'_U: \pi'^{-1}(U)=\sqcup_{x\in U}(E_x)^*\rightarrow U\times (\mathbb{R}^d)^*\cong U\times \mathbb{R}^d\]
+        \[q\mapsto (\pi'(q), (v\mapsto q(j_U^{-1}(\pi'(q), v))))\]
+        \item Let $(E, \pi)$, $(E', \pi')$ be two smooth real vector bundles of rank $d$ and $d'$ over manifold $M$, the {\bf direct sum bundle} $E\oplus E'=\sqcup_{x\in M}(E_x\oplus E'_x)$, $\pi''$ sends elements of $E_x\oplus E'_x$ to $x$, with smooth structure derived from local trivializations defined as follows: let $j_U: \pi^{-1}(U)\rightarrow U\times\mathbb{R}^d$ be a local trivialization of $E$, $j'_U: \pi'^{-1}(U)\rightarrow U\times\mathbb{R}^{d'}$ be a local trivialization of $E'$, $p_2: U\times\mathbb{R}^d\rightarrow\mathbb{R}^d$ and $p'_2: U\times\mathbb{R}^{d'}\rightarrow\mathbb{R}^{d'}$ are both projections to the second component, then we can define
+        \[j''_U: \pi''^{-1}(U)=\bigsqcup_{x\in U}(E_x\oplus E'_x)\rightarrow U\times (\mathbb{R}^d\oplus\mathbb{R}^{d'})\cong U\times \mathbb{R}^{d+d'}\]
+        \[q\mapsto (\pi''(q), (p_2(j_U(q)), p'_2(j'_U(q))))\]
+        \item Let $(E, \pi)$, $(E', \pi')$ be two smooth real vector bundles of rank $d$ and $d'$ over manifold $M$, the {\bf tensor product bundle} $E\oplus E'=\bigsqcup_{x\in M}(E_x\otimes E'_x)$, $\pi''$ sends elements of $E_x\otimes E'_x$ to $x$, with smooth structure derived from local trivializations defined as follows: let $j_U: \pi^{-1}(U)\rightarrow U\times\mathbb{R}^d$ be a local trivialization of $E$, $j'_U: \pi'^{-1}(U)\rightarrow U\times\mathbb{R}^{d'}$ be a local trivialization of $E'$, $p_2: U\times\mathbb{R}^d\rightarrow\mathbb{R}^d$ and $p'_2: U\times\mathbb{R}^{d'}\rightarrow\mathbb{R}^{d'}$ are both projections to the second component, then we can define
+        \[j''_U: \pi''^{-1}(U)=\bigsqcup_{x\in U}(E_x\otimes E'_x)\rightarrow U\times (\mathbb{R}^d\otimes\mathbb{R}^{d'})\cong U\times \mathbb{R}^{dd'}\]
+        \[q\otimes q'\mapsto (\pi''(q\otimes q'), p_2(j_U(q))\otimes p'_2(j'_U(q)))\]
+        \item Let $(E, \pi)$, $(E', \pi')$ be two smooth real vector bundles of rank $d$ and $d'$ over manifold $M$, let $f: E\rightarrow E'$ be a vector bundle homomorphism over $M$ such that the rank of $f$ at every point $x\in M$ is constant $r$, ($rank(f|_{E_x}: E_x\rightarrow E'_x)=r$ for all $x\in M$), then the smooth embedded submanifold $\{v\in E: f(e)=0\}$ is a smooth vector bundle, called the {\bf kernel} of $f$, denote as $\ker(f)$.
+    \end{itemize}
+\end{dfn}
+
+\begin{rmk}
+    The above concepts can be defined for complex vector bundles as well.
+\end{rmk}
+
+\begin{rmk}
+    If $E$ and $E'$ both have trivilizations associated to the same open cover $\mathcal{C}$, so are $E^*$, $E\oplus E'$ and $E\otimes E'$. This is NOT true for kernel bundles which can be seen in the example below. If the transition functions of $E$ and $E'$ are $\{t_{VU}\}$ and $\{t'_{VU}\}$, the corresponding transition functions for $E^*$, $E\oplus E'$ and $E\otimes E'$ are $\overline{t_{VU}^{-1}}$, $t_{VU}\oplus t'_{VU}$ and $t_{VU}\otimes t'_{VU}$ respectively.
+\end{rmk}
+
+\begin{exm}
+    Consider the map $f: \mathbb{R}^3\rightarrow\mathbb{R}$ defined as $f(x_1, x_2, x_3)=x_1^2+x_2^2+x_3^2$, the unit 2-sphere $S^2$ is the embedded submanifold $f^{-1}(1)$. Let $i$ be the inclusion map from $S^2$ to $\mathbb{R}^3$, then $f$ induces a bundle homomorphism from $i^*(T\mathbb{R}^3)$ to $(f\circ i)^*(T\mathbb{R}^1)$ (which are both trivial) whose kernel is isomorphic to $TS^2$ (which us not trivial by Example \ref{ts2}. Furthermore, $TS^2\oplus (S^2\times \mathbb{R})\cong \mathbb{S^2}\times\mathbb{R}^3$.
+\end{exm}
+
+\begin{rmk}
+    If $E$, $E'$ are bundles over $M$, $g: E\rightarrow E'$ a homomorphism of constant rank, $f: N\rightarrow M$ a smooth map, then $f^*(E^*)=(f^*(E))^*$, $f^*(E\oplus E')=f^*(E)\oplus f^*(E')$, $f^*(E\otimes E')=f^*(E)\otimes f^*(E')$. Let $f^*(g)$ be the homomorphism from $f^*(E)$ to $f^*(E')$ induced by $g$, then $\ker(f^*(g))=f^*(\ker(g))$.
+\end{rmk}
+
+Recall that a quadratic form on a vector space $V$ is a symmetric bilinear form, hence can be written as an element in $q\in V^*\otimes V^*$ such that under map $s: a\otimes b\mapsto b\otimes a$ we have $s(q)=q$. Hence:
+
+\begin{dfn}
+    Let $E$ be a smooth real vector bundle over manifold $M$, $s: E^*\otimes E^*\rightarrow E^*\otimes E^*$ be defined as $s(u\otimes v)=v\otimes u$. Then, a smooth section of $\ker(id-s)$ is called a quadratic form on $S$. It is called {\bf positive definite} iff its value at all $x\in M$ is positive definite. A positive definite quadratic form on $TM$ is called a {\bf Riemannian metric}.
+\end{dfn}
+
+\begin{rmk}
+    Riemannian metric gives one a way to measure the length of tangent vectors as well as angles between tangent vectors, which allow us to do geometry as we had done in Euclidean space.
+\end{rmk}
+
+\begin{thm}
+    Any smooth vector bundle has a positive definite quadratic form. In particular, any smooth manifold has a Riemannian metric.
+\end{thm}
+
+\begin{proof}
+    Let $j_U: \pi^{-1}(U)\rightarrow U\times\mathbb{R}^n$ be a set of local trivializations of $E$, $e_1, \dots e_n$ the standard basis of $\mathbb{R}^n$. For any $p\in U$, $\{j_U^{-1}(p, e_i)\}$ is a basis of $E_p$, let $\{\alpha^i\}$ be the dual basis in $E_p^*$, then $q_U=\sum_i\alpha^i\otimes\alpha^i$ is a smooth positive quadratic form on $E|_U$. Let $\mathcal{C}$ be an open cover such that for every $U\in \mathcal{C}$ there is a local trivialization of $E$ denoted as $j_U$, $\{\psi_U\}$ a set of partition of unity functions, then we can set $q=\sum_{U\in\mathcal{C}}\psi_Uq_U$.
+\end{proof}
+
+\begin{rmk}
+    If $f: E\rightarrow E'$ is an injective bundle homomorphism, we call $E$ a {\bf subbundle} of $E'$. A positive definite quadratic form gives a constant rank bundle map $p: E'\rightarrow E$ via orthogonal projection, $\ker(p)$ is called the {\bf orthogonal complement bundle} or the {\bf quotient bundle} or the {\bf cokernel bundle}, denoted as $E^\perp$ or $E'/E$ or $coker(f)$.
+\end{rmk} 
+
+\begin{rmk}
+    The orthogonal complements defined by different quadratic forms are isomorphic.
+\end{rmk}
+
+
+\begin{exm}
+    If $M$ is an embedded submanifold of $M'$, there is a bundle homomorphism $i_*: TM\rightarrow T_M(M')$, the orthogonal complement of $TM$ in $T_M(M')$ is called the {\bf normal bundle}. 
+\end{exm}
+
+\begin{dfn}
+    Let $M$ be a smooth manifold.
+    \begin{itemize}
+        \item A {\bf $(p, q)$ tensor bundle} is the bundle $TM^{\otimes p}\otimes T^*M^{\otimes q}$ when $p>0$ or $q>0$, and the trivial bundle $M\times\mathbb{R}$ when $p=q=0$.
+        \item A smooth section of the $(p, q)$ tensor bundle is called a {\bf $(p, q)$ tensor field}.
+        \item When $p>0$, $q>0$, there is a bundle homomorphism from the $(p, q)$ tensor bundle to $(p-1, q-1)$ tensor bundle, defined by 
+        \[(a_1\otimes\dots\otimes a_p)\otimes (b^1\otimes \dots \otimes b^q)\mapsto (a_p, b^q)(a_1\otimes \dots \otimes a_{p-1})\otimes (b^1\otimes \dots \otimes b^{q-1})\]
+        Where $(a_p, b^q)$ is the bilinear pairing between tangent and cotangent spaces.
+    \end{itemize}
+\end{dfn}
+
+\begin{rmk}
+    Under local coordinate chart we have:
+    \begin{itemize}
+        \item A $(p, q)$ tensor field can be written as (under Einstein's notation) $a^{i_1\dots i_p}_{j_1\dots j_q}\partial_{i_1}\otimes\dots\otimes \partial_{i_p}\otimes dx^{j_1}\otimes \dots \otimes dx^{j_q}$.
+        \item The contraction map sends a tensor field with coefficient functions $a^{i_1\dots i_p}_{j_1\dots j_q}$ to one with coefficients $a^{i_1\dots i_{p-1}k}_{j_1\dots j_{q-1}k}$ (summing over all $k$, according to Einstein's notation).
+        \item Riemannian metric is a $(0, 2)$ tensor field.
+        \item A $(1, 1)$ tensor field is a bundle homomorphism from $TM$ to $TM$. Its contraction is the trace function.
+    \end{itemize}
+\end{rmk}
+
+
+\newpage
+
+\section{Flows, Lie derivatives, Foliations}
+
+Picard's theorem of the existence and uniqueness of solutions of ODE implies that:
+
+\begin{thm}
+    Let $M$ be a smooth manifold, $X$ a vector field on $M$. There is an open neighborhood $U=\bigcup_{x\in M}\{x\}\times I_x$ of $M\times \{0\}$ in $M\times \mathbb{R}$, where $I_x$ are open intervals containing $x$, and a map $\Psi: U\rightarrow M$ such that:
+    \begin{itemize}
+        \item $\Psi(x, 0)=x$
+        \item ${d\over dt}\Psi(x, t)|_{t=r}=X(\Psi(x, r))$
+        \item If there is an interval $J$ containing $0$, a smooth map $\gamma: J\rightarrow M$ such that ${d\over dt}\gamma(t)|_{t=s}=X(\gamma(s))$, then $J\subseteq I_{\gamma(0)}$ and $\gamma(t)=\Psi(\gamma(0), t)$.
+    \end{itemize}
+    This $\Psi$ is called the {\bf flow} corresponding to vector field $X$.
+\end{thm}
+
+\begin{rmk}
+    If $X$ is compactly supported, the flow $\Psi$ is defined on $X\times\mathbb{R}$.
+\end{rmk}
+
+
+\newpage
+
+\section{Sard's theorem and Whitney's embedding}
+
+\section{Exterior Derivatives, Integration and Stokes theorem}
+
+\section{De Rham Theory}
+
+\newpage
 \appendix
 
 \section{Practice Problems}
@@ -574,11 +976,94 @@ Answer: $\{M\backslash \{(1, 0, 0, 0)\}, M\backslash \{(-1, 0, 0, 0)\}\}$. The t
 
 2. Let $A$ be a non-empty subset of a smooth manifold $M$. Show that if every smooth function on $A$ can be extended to a smooth function on $M$, then $A$ is closed.\\
 
-Answer: Let $d$ be the dimension of $M$. Suppose $A$ is not closed, then there is some $p\in M$ such that $p\not\in A$ and $p\in\overline{A}$. Pick a coordinate chart $i: U\rightarrow V\subseteq\mathbb{R}^d$ such that $p\in U$ and $i(p)=0$, let $f_U$ be a smooth function on $M$ such that $f_U(p)=1$ and $supp(f_U)\subseteq U$, let $g:V\rightarrow \mathbb{R}$ be defined as $g(x_1, \dots, x_d)=1/(x_1^2+\dots+x_d^2)$, and consider function $h(p)=\begin{cases}0 & p\not\in U\\ f_U(p)g(i(p)) & p\in U$ which is smooth on $M\backslash \{p\}$, then $h|_A$ is a smooth function on $A$ which can not be extended to $M$.
+Answer: Let $d$ be the dimension of $M$. Suppose $A$ is not closed, then there is some $p\in M$ such that $p\not\in A$ and $p\in\overline{A}$. Pick a coordinate chart $i: U\rightarrow V\subseteq\mathbb{R}^d$ such that $p\in U$ and $i(p)=0$, let $f_U$ be a smooth function on $M$ such that $f_U(p)=1$ and $supp(f_U)\subseteq U$, let $g:V\rightarrow \mathbb{R}$ be defined as $g(x_1, \dots, x_d)=1/(x_1^2+\dots+x_d^2)$, and consider function $h(p)=\begin{cases}0 & p\not\in U\\ f_U(p)g(i(p)) & p\in U\end{cases}$ which is smooth on $M\backslash \{p\}$, then $h|_A$ is a smooth function on $A$ which can not be extended to $M$.
 
 \subsection{Week 4}
 
-Find all possible real numbers $a$ and $b$ such that $\{(x,y)\in\mathbb{R}^2:y^2=x(x2+ax+b)\}$ is an embedded submanifold of $\mathbb{R}^2$.
+Find all possible real numbers $a$ and $b$ such that $\{(x,y)\in\mathbb{R}^2:y^2=x(x^2+ax+b)\}$ is an embedded submanifold of $\mathbb{R}^2$.\\
+
+Answer: If $a^2-4b\not=0$ and $b\not=0$, the function $F(x, y)=y^2-x(x^2+ax+b)$ has constant rank in a neighborhood of the preimage of $0$, hence the set is an embedded submanifold. Now we consider the other cases:
+
+\begin{enumerate}
+    \item If $b=0$:
+       \begin{enumerate}
+           \item If $a<0$, the set has a single isolated point and hence can not be a topological manifold.
+           \item If $a>0$, the set can not be a topological manifold because it is connected and with $(0, 0)$ removed it has $3$ connected components.
+           \item If $a=0$, the set is $A=\{(x, y): y^2=x^3\}$. Suppose it is an embedded submanifold. Because it has empty interior and is also connected, it must have dimension $1$. Hence, then there is a coordinate chart $t$ defined on a neighborhood of $(0, 0)$ and taking value in some open set $V\subseteq\mathbb{R}$. Without loss of generality assume that $t(0, 0)=0$. The composition of the projections to $x$ and $y$ directions and $t^{-1}$ are now two smooth functions on $V$, which we denote as $x(s)$ and $y(s)$. Hence $x(0)=y(0)=0$, and embeddedness implies that either $x'(0)\not=0$ or $y'(0)\not=0$. Now consider the equation $y(s)^2=x(s)^3$, take second order derivatives on both sides we get $y'(0)=0$, take third order derivatives on both sides we get $x'(0)=0$, a contradiction.
+       \end{enumerate}
+    \item If $b\not=0$:
+       \begin{enumerate}
+           \item If $a>0$, use the same argument as in 1(a).
+           \item If $a<0$, use the same argument as in 1(b).
+       \end{enumerate}
+       
+\end{enumerate}
+
+\subsection{Week 5}
+
+1. Let $(E, \pi)$ be a smooth real vector bundle over smooth manifold $B$, $\mathcal{C}$ an open cover of $B$ such that we can define local trivialization and transition maps for bundle $(E, \pi)$. Suppose $\mathcal{C}'$ is a refinement of $\mathcal{C}$, show that one can define local trivialization and transition functions for $(E, \pi)$ using $\mathcal{C}'$ as well.\\
+
+Answer: For every $U\in \mathcal{C'}$, pick an open set $I(U)\in\mathcal{C}$, such that $U\subseteq I(U)$. Now let $j_U=j_{I(U)}|_{\pi^{-1}(U)}$, $t_{U'U}=t_{I(U')I(U)}|_{U'\cap U}$. It is easy to verify that these satisfies all the requirements for local trivialization and transition functions.\\ 
+
+2. Let $M$ be a smooth manifold, $\mathcal{C}$ be an open cover. For any $U, V\in \mathcal{C}$ that have non empty intersection, define a smooth real-valued function $f_{VU}$ on $U\cap V$. Assume further that for $f_{UU}\equiv 0$, and for any $U, V, W\in \mathcal{C}$ with non-empty intersection, $f_{WU}=f_{WV}+f_{VU}$. Show that for any $U\in \mathcal{C}$ there is a real valued smooth function $\rho_U$ defined on $U$ such that on $U\cap V\not=\emptyset$, $f_{VU}=g_V-g_U$.\\
+
+Answer: Let $\{\psi_U: U\in\mathcal{C}\}$ be a set of partion of unity functions. By multiplying with $\psi_U$ and the linearlity of this question, we can assume without loss of generality that the support of all $f_{VU}$ lie in some compact subset of a single $U_0\in\mathcal{C}$. Now we define $g_U$ as: $g_U\equiv 0$ if $U=U_0$ or $U\cap U_0\emptyset$; if $U\cap U_0\not=\emptyset$, $g_U=f_{UU_0}$ on $U\cap U_0$, and $g_U=0$ elsewhere.\\
+
+3. A real vector bundle is called {\bf orientable} if one can pick a trivialization such that the value of the transition function all have positive determinant. Prove that rank $1$ smooth real vector bundle over any smooth manifold must be isomorphic to a trivial bundle.\\
+
+Answer: By assumption, the transition functions are $t_{VU}=[e^f_{VU}]$ for some real valued function $f_{VU}$, and problem 2 is saying that $\{t_{VU}\}$ and $\{t'_{VU}\equiv [1]\}$ satisfy the coboundary condition hence represent isomorphic vector bundles. In other words, by a change of trivialization we can make all transition functions taking constant value in the $1\times 1$ identity matrix. This implies that the vector bundle in question is trivial.
+
+\subsection{Week 6}
+
+1. Show that $SU(2)=\{A\in M_{2\times 2}(\mathbb{C}): A\overline{A^T}=I_2, \det(A)=1\}$ is a subgroup of $GL(2, \mathbb{C})$ and an embedded submanifold, hence is a Lie group. Show further that it is diffeomorphic to $S^3$.\\
+
+Answer: $SU(2)$ is a level set of function $F: GL(2, \mathbb{C})\rightarrow \mathbb{R}^5$, where \[F(\left[\begin{array}{cc}a & b\\ c & d\end{array}\right])=(a\bar{a}+b\bar{b}, c\bar{c}+d\bar{d}, Re(a\bar{c}+b\bar{d}), Imag(a\bar{c}+b\bar{d}), arg(ad-bc))\]
+
+The bijection from $SU(2)$ to $S^3$ can be defined as follows: any $A\in SU(2)$ can be sent to $A\left[\begin{array}{c}1\\0\end{array}\right]\in \mathbb{C}^2$. We identify $\mathbb{C}^2$ with $\mathbb{R}^4$ then the image of this map is the unit $3$ sphere.\\
+
+2. Let $M$, $N$ be two smooth manifolds, $(E, \pi)$ a smooth vector bundle on $M$, $(E', \pi')$ a smooth vector bundle on $N$. Suppose $g: M\rightarrow N$ is a smooth embedding, and there is a smooth vector bundle homomorphism $h: E\rightarrow E'$ which is $\pi'\circ h=g\circ \pi$. Show that:
+
+\begin{itemize}
+    \item If $h$ is an injection then it is a smooth embedding.
+    \item Find an $h$ that has different ranks at different points on $E$.
+\end{itemize}
+
+Answer:
+\begin{itemize}
+    \item By looking at local coordinate charts induced by trivialization we see that $h$ is smooth, hence because it is an injection, it must also be an immersion. So we only need to show that open sets are sent to open sets of the image under subspace topology. Let $m$, $n$ be the dimensions of $M$ and $N$ respectively, $r$, $r'$ be thr ranks of $E$, $E'$ respectively. Suppose $A\subseteq E$ is open, $q\in A$, $p=\pi(q)$. By rank theorem, we can find open sets $U$ and $U'$ in $M$ and $N$ that contains $p$ and $g(p)$ respectively, such that $U\subseteq A$, $g(U)=U'\cap g(M)$, and $U'\backslash g(U)$ is open. Shrink $U$ and $U'$ if necessary, we can further assume that there is a local trivialization of $E$ on $U$: $j_U: \pi^{-1}(U)\rightarrow U\cap\mathbb{R}^r$, and a local trivialization of $E'$ on $U'$: $j_{U'}: \pi'^{-1}(U')\rightarrow U'\times\mathbb{R}^{r'}$, and that there is some open set $B\subseteq\mathbb{R}^r$, $b\in B$, such that $j_U(q)=(p, b)$, and $j_U^{-1}(U\times B)\subseteq A$. Let $p_2$ be thr projection from $U'\times\mathbb{R}^{r'}$ to the second component $\mathbb{R}^{r'}$, then, because of the continuity of $j_{U'}\circ h\circ j_U^{-1}$, if $U$ and $U'$ are sufficiently small, there is a $r'-r$ dimensional subspace $L$ such that for all $x\in U$, $p_2(j_{U'}(h(E_{x})))\oplus L=\mathbb{R}^{r'}$. Then the set
+    \[\{j_{U'}(g(x), v): x\in U, v=b+l, b\in p_2(j_{U'}(h(j_U^{-1}(\{x\}\times B)))), l\in L\}\cup \pi'^{-1}(U'\backslash g(U))\]
+    is open in $E'$, contains $h(q)$, and its intersection with $h(E)$ is contained in $A$, which finishes the proof.
+    \item Let $M=N=\mathbb{R}$, $E=E'$, $h(x, v)=(x, xv)$.
+\end{itemize}
+
+3. Show that the tangent bundle of circle $S^1$ is trivial.\\
+
+Answer: Let $S^1$ be the unit circle in $\mathbb{R}^2$. The projections $x_0: (a, b)\mapsto a$ and $x_1: (a, b)\mapsto b$ are smooth functions on $\mathbb{R}^2$ hence must be smooth on $S^1$. We can define a bundle isomorphism from $TS^1$ to the trivial bundle $S^1\times\mathbb{R}$ as follows: for each $(a, b)\in S^1\subseteq\mathbb{R}^2$, the function $bx_0-ax_1$ is smooth on $S^1$. For any tangent vector of $S^1$ which is in the tangent space of $(a, b)\in S^1$, we represent it as a smooth path $\gamma$, then it will be sent to $((a, b), ((bx_0-ax_1)\circ\gamma)')$.
+
+\subsection{Week 7}
+
+1. Let $M$ be a smooth manifold, $U$ an open subset, $p\in U$, $f: U\rightarrow \mathbb{R}$ a smooth function. Show that there is a compactly supported smooth function on $M$ which is identical to $f$ on an open subset $V\subseteq U$ such that $p\in V$.\\
+
+Answer: By partition of unity we can find a compactly supported function $g$ whose value is between $0$ and $1$ and takes $1$ in a neighborhood of $p$, such that the support of $g$ is contained in $U$. Now one can take this new smooth function as $fg$.\\
+
+2. Consider the smooth map from $\mathbb{R}^2$ to $\mathbb{R}^3$ defined as $f: (x_1, x_2)\mapsto (x_1, x_2, \sin(x_1)+e^{x_2})$. Let $p=(0, 0)$, find $f_*(T_p(\mathbb{R}^2))$.\\
+
+Answer: It is spanned by $\partial_1+\partial_3$ and $\partial_2+\partial_3$.\\
+
+3. Let $M$ be a smooth manifold, $p\in M$, $\gamma$ a smooth path starting from $p$, $f$ a smooth function on $M$. Recall that the pairing $T_pM\times T^*_pM\rightarrow \mathbb{R}$ can be written as $([\gamma], [f])\mapsto (f\circ \gamma)'|_0$. Now see $f$ as a smooth map from $M$ to $\mathbb{R}$, pick the coordinate chart on $\mathbb{R}$ as identity then we have standard basis $\{\partial_1\}$ of $T_{f(p)}\mathbb{R}$. Show that
+$f_*([\gamma])=C\partial_1$ where $C$ is the pairing between $[\gamma]\in T_pM$ and $[f]\in T^*_pM$.\\
+
+Answer: By definition, $f_*([\gamma])=[f\circ\gamma]=(f\circ\gamma)'|_{t=0}\partial_1=([\gamma], [f])\partial_1$
+
+\subsection{Week 8}
+
+1. Show that any smooth 1-form on $\mathbb{R}$ is of the form $df$.\\
+
+2. Write down a smooth 1-form on $\mathbb{R}^2$ which is not of the form $df$.\\
+
+3. Write down a smooth 1-form on $S^3$ which is non-zero everywhere.\\
+
+4. Let $f$ and $g$ be smooth functions on manifold $M$, show that $d(fg)=fdg+gdf$.\\
 
 \newpage
 
@@ -603,6 +1088,32 @@ Let $M=\mathbb{RP}^n$ (or $\mathbb{CP}^n$), there are $n+1$ open subsets $U_k=\{
 \[[x_0:\dots:x_n]\mapsto (x_0/x_k, \dots, x_{k-1}/x_k, x_{k+1}/x_k, \dots, x_n/x_k)\]
 
 This show that both $\mathbb{RP}^n$ and $\mathbb{CP}^n$ are locally Euclidean hence both are topological manifolds. The $n+1$ homeomorphisms form a smooth atlas on $\mathbb{RP}^n$ ($\mathbb{CP}^n$), which make them smooth manifolds as well.
+
+\newpage
+
+\section{Suggested Final Presentation Topics}
+
+Below are some suggested presentation topics. You can find references to these topics via Google or Wikipedia. For more complicated topics it would be sufficient to just present a simplest example! You can also pick some other topic not on this list, preferably related to your own research interests!
+
+\begin{enumerate}
+    \item Every smooth manifold has a triangulation 
+    \item Connections and curvature 
+    \item Relationship between Lie groups and Lie algebras
+    \item Closed subgroups of Lie groups are sub manifolds
+    \item Complex manifolds, Sympletic manifolds or Kähler manifolds
+    \item Riemann surfaces
+    \item Poincar\'e duality
+    \item Chern classes, Euler classes
+    \item Stable and unstable foliations of a hyperbolic flow or diffeomorphism
+    \item C\v ech cohomology and C\v ech to derived functor spectral sequence
+    \item Topological K-theory
+    \item Hamiltonian and Lagrangian in physics 
+    \item Noether's theorem in physics 
+    \item EM field as $U(1)$ gauge theory 
+    \item Manifold learning
+\end{enumerate}
+
+
 
 
 \end{document}
