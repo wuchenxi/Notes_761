@@ -571,7 +571,7 @@ If $(E, \pi)$ is a vector bundle, it is evident that the $t_{U', U}$ in Definiti
 
 {\em Section 3 and 11 of textbook}\\
 
-\begin{dfn}
+\begin{dfn}\label{tancot}
     Let $M$ be a smooth manifold of dimension $n$, let $\mathcal{A}=\{i_\alpha: U_\alpha\rightarrow V_\alpha\}$ be a smooth atlas, $\mathcal{C}$ be the domains of coordinate charts in $\mathcal{A}$, for every $U\in\mathcal{C}$, there is a unique chart $i_U: U\rightarrow V\subseteq\mathbb{R}^n$
     \begin{itemize}
     \item If $t_{VU}(p)=D(i_V\circ i_U^{-1})|_{i_U(p)}$, the resulting bundle (via Remark \ref{tvb}) is called the {\bf tangent bundle}, denoted as $T(M)$ or $TM$.
@@ -906,26 +906,257 @@ Recall that a quadratic form on a vector space $V$ is a symmetric bilinear form,
 
 \section{Flows, Lie derivatives, Foliations}
 
+{\em Chapters 8, 9 and 19 of textbook}\\
+
 Picard's theorem of the existence and uniqueness of solutions of ODE implies that:
 
-\begin{thm}
+\begin{thm}\label{flow}
     Let $M$ be a smooth manifold, $X$ a vector field on $M$. There is an open neighborhood $U=\bigcup_{x\in M}\{x\}\times I_x$ of $M\times \{0\}$ in $M\times \mathbb{R}$, where $I_x$ are open intervals containing $x$, and a map $\Psi: U\rightarrow M$ such that:
     \begin{itemize}
         \item $\Psi(x, 0)=x$
-        \item ${d\over dt}\Psi(x, t)|_{t=r}=X(\Psi(x, r))$
-        \item If there is an interval $J$ containing $0$, a smooth map $\gamma: J\rightarrow M$ such that ${d\over dt}\gamma(t)|_{t=s}=X(\gamma(s))$, then $J\subseteq I_{\gamma(0)}$ and $\gamma(t)=\Psi(\gamma(0), t)$.
+        \item For any $(x, r)\in U$, the value of $X$ at $\Psi(x, r)$ is represented by the path $t\mapsto \Psi(x, r+t)$. We can write this as ${d\over dt}\Psi(x, t)|_{t=r}=X(\Psi(x, r))$.
+        \item $U$ is ``maximum'' in the following sense: if there is an interval $J$ containing $0$, a smooth map $\gamma: J\rightarrow M$ such that ${d\over dt}\gamma(t)|_{t=s}=X(\gamma(s))$, then $J\subseteq I_{\gamma(0)}$ and $\gamma(t)=\Psi(\gamma(0), t)$.
     \end{itemize}
     This $\Psi$ is called the {\bf flow} corresponding to vector field $X$.
 \end{thm}
 
+The proof is by the following Picard's Theorem for the existence of solutions of ODEs:
+
+\begin{thm}[Picard's Theorem]
+    Let $U$ be an open set in $\mathbb{R}^n$, $V\subseteq U$ a compact subset, $f: U\times\mathbb{R}\rightarrow\mathbb{R}^n$ smooth, then there exists some $\epsilon>0$ such that there is a map $Y: V\times(-\epsilon, \epsilon)\rightarrow U$, such that $Y(p, 0)=p$, and ${d\over dt}Y(p, t)=f(Y(p, t), t)$.
+\end{thm}
+
+Picard's Theorem can be proved by contraction principal or Euler's Method. To show Theorem \ref{flow} from Picard's Theorem, cover the manifold with smooth coordinate charts, such that the domain of each chart contains an open subset which is sent to the interior of a closed disc under coordinate chart, and these open subsets form an open cover of $M$. Now apply Picard's Theorem to the codomain of these coordinate charts, ``glue'' the resulting solutions together by uniqueness of solutions of ODEs.
+
 \begin{rmk}
-    If $X$ is compactly supported, the flow $\Psi$ is defined on $X\times\mathbb{R}$.
+    If $X$ is compactly supported, the flow $\Psi$ is defined on $X\times\mathbb{R}$. The argument outlined above shows that there is some $\epsilon>0$ such that $M\times (-\epsilon, \epsilon)\subseteq U$. Making use of the fact that $\Psi(x, t+t')=\Psi(\Psi(x, t), t')$, we can extend the domain of $\Psi$ to $X\times\mathbb{R}$. 
 \end{rmk}
 
+\begin{exm}
+    $M=\mathbb{R}$, if $X=\partial/\partial_x$, then $\Psi(x, t)=x+t$. If $X=x^2\partial_x$, then $\Psi(x, t)=\begin{cases} 0 & x=0\\ -1/(t-1/x) & x\not=0\end{cases}$.
+\end{exm}
+
+\begin{exm}\label{pen} $M=TS^1$, where $S^1$ is the unit circle $\{(\cos\theta, \sin\theta)\in \mathbb{R}^2\}$. Let $i$ be a coordinate chart on $S^1$ defined as $(\cos\theta, \sin\theta)\mapsto \theta$, then it induces a coordinate chart on $M$ which we denote as $I$, and $I(v)=(\theta, c)$ iff $v\in T_{(\cos\theta, \sin\theta)}S^1$, $v=c\partial_\theta$. 
+\begin{itemize}
+    \item The vector field $X$ on $M$ defined as $X(I^{-1}(\theta, c))=I^{-1}_*(c\partial_\theta)$ has flow $\Phi(I^{-1}(\theta, c), t)=c\partial_\theta|_{(\cos(\theta+ct), \sin(\theta+ct))}$. Physically this is traveling around the unit circle with constant speed.
+    \item The vector field $Y$ defined as $X(I^{-1}(\theta, c))=I^{-1}_*(c\partial_\theta-\cos(\theta)\partial_c)$ represents the dynamics of the simple pendulum.
+\end{itemize}    
+\end{exm}
+
+\begin{rmk}
+    The vector field $X$ in Example \ref{pen} can also be written down under other coordinate charts. Suppose $j$ is another local coordinate chart on $S^1$, sending a point $p$ in some $U\subseteq S^1$ to $s\in \mathbb{R}$. Let $J$ be a coordinate chart on $T_U(S^1)$ defined as $J(v)=(s, d)$ iff $v\in T_{j^{-1}(s)}S^1$, $v=d\partial_s$. Then by Definition \ref{tancot},
+    \[X(J^{-1}(s, d))=X(I^{-1}((i\circ j^{-1})s, (i\circ j^{-1})'|_s d))\]
+    \[=I^{-1}_*((i\circ j^{-1})'|_s d\partial_\theta)=J^{-1}_*((i\circ j^{-1})'|_s d({\partial s\over\partial \theta}\partial_s+{\partial d\over\partial \theta}\partial_d))\]
+    \[=J^{-1}_*((i\circ j^{-1})'|_s d((j\circ i^{-1})'|_{i(j^{-1}(s))}\partial_s+(i\circ j^{-1})'|_s (j\circ i^{-1})''|_{i(j^{-1}(s))}d\partial_d))\]
+    \[=d\partial_s-{(i\circ j^{-1})''|_s\over (i\circ j^{-1})'|_s} d^2\partial_d\]
+
+    Now consider a Riemannian metric on $S^1$ defined by $g=d\theta\otimes d\theta$, then under coordinate chart $J$ it becomes $g=(i\circ j^{-1})'^2 ds\otimes ds$. Let $g_{ss}=(i\circ j^{-1})'^2$, then 
+    \[{(i\circ j^{-1})''|_s\over (i\circ j^{-1})'|_s} d^2={1\over 2}{\partial_s(g_{ss})\over g_{ss}}d^2\]
+    This idea can be extended to higher dimension to get the {\bf geodesic flow}: let $M$ be a smooth manifold, $j$ a local coordinate chart sending points in $U\subseteq M$ to $(s^1, \dots, s^d)\in V\subseteq \mathbb{R}^d$, then a coordinate chart of $TM$ can be defined as $J: T_UM\rightarrow V\times\mathbb{R}^d$, $J(v)=(s^1, \dots s^d, p^1, \dots p^d)$ if $v\in T_{i^{-1}(s^1, \dots, s^d)}M$, $v=p^i\partial_{s^i}$. Let $g$ be a Riemannian metric defined as $g=g_{ij}ds^ids^j$, $[g^{ij}]=[g_{ij}]^{-1}$. Now we can define vector field on $TM$:
+    \[X(J^{-1}(s^1,\dots, s^d, p^1,\dots, p^d)=J^{-1}_*(p^i{\partial\over \partial{s^i}}-g^{ij}({\partial g_{jk}\over\partial s^l}p^kp^l-{1\over 2}{\partial g_{kl}\over\partial s^j}p^kp^l){\partial\over \partial p^i})\]
+    This definition is independent of the choice of $j$ (which will be left as a practice problem), hence the vector field is well defined.  
+\end{rmk}
+
+A key concept that one can define using flows is the {\bf Lie derivative}:
+
+\begin{dfn}\label{lieder}
+    Let $X$ be a smooth vector field, $\Phi$ the flow defined by $X$. By the theory of ODE we know that for small $t$, $\Phi_t: \cdot\mapsto \Phi(\cdot, t)$ is locally a diffeomorphism. We can now define the {\bf Lie derivative} which is a map from the set of smooth $(p, q)$ tensor fields to smooth $(p, q)$ tensor fields, as follows:
+    \begin{enumerate}
+        \item If $p=q=0$, i.e. the tensor field is a smooth function $f$, $L_X(f)$ is defined as
+        \[(L_X(f))(x)={d\over dt}f(\Phi_t(x))|_{t=0}\]
+        \item If $X_i$ are vector fields, $\alpha^j$ are $1$-forms, then
+        \[(L_X(X_1\otimes\dots\otimes X_p\otimes \alpha^1\otimes\dots\otimes \alpha^q))(x)\]
+        \[={d\over dt}\left(\bigotimes_i(\Phi_t)^{-1}_*X_i(\Phi_t(x))\otimes \bigotimes_j(\Phi_t)^*\alpha^j(\Phi_t(x))\right)|_{t=0}\]
+        Here $(\Phi_t)^{-1}_*$ can also be written as $(\Psi_{-t})_*$.
+    \end{enumerate}
+\end{dfn}
+
+Intuitively, Lie derivative described how fast a tensor field changes with the family of diffeomorphisms $\Phi_t$.
+
+\begin{exm}
+   $M=\mathbb{R}$, $X=x\partial_x$, $f(x)=x^3$, then $\Phi_t(x)=e^tx$, $(L_X(f))(x)=3x^3$.    
+\end{exm}
+
+\begin{rmk}
+  $f\in C^\infty(M)$, then $L_Xf$ can also be denoted as $Xf$.    
+\end{rmk}
+
+\begin{thm}\label{lieprop}
+    $X$, $Y$ are smooth vector fields, $f$ a smooth function, $a$, $b$ tensors.
+    \begin{enumerate}
+        \item $L_X(fa)=L_X(f)a+fL_X(a)$
+        \item $L_X(a\otimes b)=L_X(a)\otimes b+a\otimes L_X(b)$
+        \item $L_X$ commutes with contraction of tensors.
+        \item $L_{L_X Y}f=L_XL_Yf-L_YL_Xf$
+    \end{enumerate}
+\end{thm}
+
+\begin{proof}
+  The proof of 1 and 2 are similar to the proof of product rule for derivatives. The proof of 3 is similar to the proof of linearlity of derivatives. For 4, without loss of generality assume $M=\mathbb{R}^n$, $X=X^i\partial_i$, $Y=Y^i\partial_i$, $L_X Y=Z^i\partial_i$. Let $F$ be the $\mathbb{R}^n$-valued function $(X^1, \dots, X^n)$, $G$ be the $\mathbb{R}^n$-valued function $(Y^1, \dots, Y^n)$, $H$ be the $\mathbb{R}^n$-valued function $(Z^1, \dots, Z^n)$.\\
+  
+  Now let $\Phi$ and $\Psi$ be the flows defined by $X$ and $Y$, $\Phi_t(\cdot)=\Phi(\cdot, t)$, $\Psi_t(\cdot)=\Psi(\cdot, t)$, then
+  \[\Phi_t(c)=c+tF(c)+O(t^2)\]
+  \[\Psi_t(c)=c+tG(c)+O(t^2)\]
+  Now by definition, 
+  \[(\Phi_{-t})_*Y(\Phi_t(c))={d\over ds}\Phi_{-t}\Psi_s\Phi_t(c)\]
+  \[={d\over ds}(((c+tF(c)+O(t^2))+sG(c+tF(c)+O(t^2))+O(s^2))\]
+  \[-tF((c+tF(c)+O(t^2))+sG(c+tF(c)+O(t^2))+O(s^2))+O(t^2))|_{s=0}\]
+  \[=G(c+tF(c)+O(t^2))-t{d\over ds}F((c+tF(c)+O(t^2))+sG(c+tF(c)+O(t^2)))|_{s=0}\]
+  So
+  \[H={d\over dt}((\Phi_{-t})_*Y(\Phi_t(c)))|_{t=0}={d\over dt}G(c+tF(c))|_{t=0}-{d\over ds}F(c+sG(c))|_{s=0}\]
+  Hence the $i$-th entry of $H$ is
+  \[Z^i=X^j\partial_jY^i-Y^j\partial_jX^i\]
+  So
+  \[L_X Y=X^j(\partial_jY^i)\partial_i-Y^i(\partial_iX^j)\partial_j\]
+  and 4 follows.
+\end{proof}
+
+\begin{rmk}
+    Because a vector field $X$ can be recovered from $Xf$ for all smooth function $f$, the theorem \ref{lieprop} above provided a way to calculate Lie derivatives of any tensor field explicitly. 
+\end{rmk}
+
+\begin{rmk}
+    $L_X Y$ can also be denoted as $[X, Y]$ and called the {\bf Lie Bracket}. It is easy to see from Theorem \ref{lieprop} part 4 that
+    \[[X, Y]=-[Y, X]\]
+    and there is the {\bf Jacobi identity}
+    \[[X, [Y, Z]]+[Y, [Z, X]]+[Z, [X, Y]]=0\]
+\end{rmk}
+    
+    Furthermore, from Theorem \ref{lieprop} part 4 and Green's theorem, we have the following:
+
+    \begin{thm}\label{flowcomm}
+      $[X, Y]=0$ iff the flows defined by $X$ and $Y$ commutes.
+    \end{thm}\qed
+
+    Combine Theorem \ref{flowcomm} and inverse function theorem, we have:
+    \begin{thm}\label{commfoli}
+      If $X_1, \dots, X_k$ are vector fields such that $[X_i, X_j]=0$, and are linearly independent everywhere, then for every $p\in M$ there is a local coordinate chart around $p$ such that the flow of $X_i$ under the chart is $((x^1, \dots, x^n), t)\mapsto (x^1, \dots, x^k+t, \dots, x^n)$.
+    \end{thm}
+    \begin{proof}
+        Without loss of generality assume that $M$ is a open submanifold of $\mathbb{R}^n$. Consider the smooth function $\Phi: U\subseteq M\times \mathbb{R}^k\rightarrow M$, such that $M\times (0, \dots, 0)\subseteq U$, $\Phi(x, t_1, \dots, t_k)=\Phi^1_{t_1}\dots \Phi^k_{t_k}(x)$, where $\Phi^k$ is the flow defined by $X_k$ and $\Phi^k_t(x)=\Phi^k(x, t)$. Pick $n-k$ indices $i_1, \dots i_{n-k}$ such that the $i_1, \dots, i_{n-k}$-th standand basis together with $(X_1^j), \dots, (X_k^j)\in\mathbb{R}^k$ are linearly independent, and apply inverse function theorem to the map
+        \[(t_1, \dots, t_k, s_1, \dots, s_{n-k})\mapsto \Phi((x^1, \dots, x^{i_1}+s_1, \dots, x^{i_k}+s_k, \dots), t_1, \dots, t_k)\]
+        We see by construction that the inverse of the map above is a local coordinate chart satisfying our requirement.
+    \end{proof}
+    
+\begin{rmk}\label{folrmk}
+    By uniqueness of the solution of ODEs, the local coordinate charts defined in Theorem \ref{commfoli} has the property that if $i: U\rightarrow V$ and $i': U'\rightarrow V'$ be two coordinate charts, $p\in U\cap U'$, there is a neighborhood $W$ of $p$ such that on $i(W)$, if
+    \[i'\circ i^{-1}(x^1, \dots, x^n)=(y^1, \dots, y^n)\]
+    Then $(y^{k+1}, \dots, y^n)$ is a smooth function of $(x^{k+1}, \dots, x^n)$. If coordinate charts with this property form an atlas, we call this atlas a {\bf foliation of dimension $k$}.
+\end{rmk}
+
+\begin{exm}
+    Flows are foliations of dimension 1. 
+\end{exm}
+
+\begin{rmk}
+    If $A$ is a foliation of dimension $k$ on smooth manifold $M$, for every $i: U\rightarrow V$ in $A$, we can decompose $U$ with immersed submanifolds $i^{-1}(\{(x^1, \dots, x^k, c^{k+1}, \dots, c^n): x^1, \dots, x^k\in\mathbb{R}, (x^1, \dots, x^k, c^{k+1}, \dots, c^n)\in V\})$. The definition of foliation means that if two such immersed submanifolds intersects, their union is also an immersed submanifold. Patch the intersecting immersed submanifolds together we can get a collection of path connected immersed submanifolds whose union is $M$, these submanifolds are called {\bf leaves} of foliation $A$. 
+\end{rmk}
+
+One can weaken the aassumption of Theorem \ref{commfoli} while still getting a foliation:
+
+\begin{thm}[Frobenious Theorem]
+    Let $D\subseteq TM$ be a rank $k$ subbundle (we call this a {\bf distribution}, note that this is unrelated to the concept of distribution in analysis). Then the followings are equivalent:
+    \begin{enumerate}
+        \item For any two smooth sections $X$ and $Y$ of $D$, $[X, Y]$ is a smooth section of $D$.
+        \item There is a foliation on $M$ of dimension $k$, such that at every $p\in M$, let $N_p$ be the leaf passing through $p$, $i_p: N_p\rightarrow M$ be the embedding map, then $(i_p)_*(T_pN_p)=D_p$. This is called the {\bf foliation defined by distribution $D$}.
+    \end{enumerate}
+\end{thm}
+
+\begin{proof}
+    2 implies 1 is obvious. To show 1 implies 2, we need to build the foliation from distribution $D$. \\
+
+    We will show, by induction on $k$, that around every point $p\in M$, there are smooth sections $X_1, \dots, X_k$ of $D$, such that $[X_i, X_j]=0$ and $X_1, \dots, X_k$ are linearly independent on this neighborhood, then we can apply Theorem \ref{commfoli} to them to get the coordinate charts that can be used to define this foliation. The case when $k=1$ is trivial because $[X, X]=0$ for any vector field $X$.\\
+
+    If $k>1$, we first pick some section $X_1, \dots, X_k$ of $D$, which are linearly independent on a neighborhood of $p$. Apply Theorem \ref{commfoli} to $\{X_1\}$, we get a local coordinate chart under which the flow defined by $X_1$ is $\Phi^1_t(x^1, \dots, x^n)=(x^1+t, x^2, \dots, x^n)$, i.e. $X_1=\partial_1$. Then for $j=2, \dots, k$, $X_j=X^i_j\partial_i$. Without loss of generality we can assume that $X^1_j=0$ for all $j$, then $[X_1, X_j]=\sum_{k>1}a^kX_k$. By solving an ODE (with $x^1$ being the variable), we can find non-zero smooth functions $c_2, \dots, c_k$ such that $[X_1, c_jX_j]=0$. Write down $[\cdot, \cdot]$ using local coordinates we see that ${\partial\over \partial x^1}c_jX^i_j=0$ for all $j, i>1$, in other words, the formula of $c_jX_j$ under the local coordinate chart does not contain $x^1$. Now apply the inductive hypothesis on $c_2X_2, \dots, c_kX_k$.
+\end{proof}
+
+\begin{exm}
+If $f: M\rightarrow N$ is a smooth submersion, $E=\{v\in TM: f_*(v)=0\}$, then $E$ is a distribution that satisfies Frobenious theorem and hence defines a foliation. The leaves of this foliation are the connected components of the level sets. This is because from Theorem \ref{flow}, we know that
+if $f_*(X(p))=X'(f(p))$, $\Phi_t$, $\Phi'_t$ are the flows defined by $X$
+ and $X'$, then $\Phi'_t(f(p))=f(\Phi_t(p))$. Hence, from Definition \ref{lieder}, we know that if $f_*(Y(p))=Y'(f(p))$, then
+ \[f_*([X, Y](p))=[X', Y'](f(p))\]
+ \end{exm}
+
+\begin{exm}
+    If $G$ is a Lie group, let $g$ be the space of vector fields on $G$ which is invariant under left multiplication, then $g$ is isomorphic to $T_eG$ as a vector space and also closed under $[\cdot, \cdot]$. $(g, [\cdot, \cdot])$ is called the {\bf Lie Algebra} of Lie group $G$.\\
+
+    As an example, suppose $G=GL(2, \mathbb{R})$, 
+    \[X(g)={d\over dt}g\left[\begin{array}{cc}1 & t\\ 0 & 1\end{array}\right]|_{t=0}\] \[Y(g)={d\over dt}g\left[\begin{array}{cc}1 & 0\\ t & 1\end{array}\right]|_{t=0}\]
+    Then under local coordinate charts \[i^{-1}: (x^1, x^2, x^3, x^4)\mapsto \left[\begin{array}{cc}1+x^1 & x^2\\x^3 & 1+x^4\end{array}\right]\], we have
+    \[X=(1+x^1)\partial_2+x^3\partial_4\]
+    \[Y=x^2\partial_1+(1+x^4)\partial_3\]
+    So
+    \[[X, Y]=(1+x^1)\partial_1+x^3\partial_3-x^2\partial_2-(1+x^4)\partial_4={d\over dt}g\left[\begin{array}{cc}1+t & 0\\ 0 & 1-t\end{array}\right]|_{t=0}\]
+\end{exm}
 
 \newpage
 
 \section{Sard's theorem and Whitney's embedding}
+
+Let $f: M\rightarrow N$ be a smooth map. We say $y\in N$ is a {\bf regular value}, if either $f^{-1}(y)$ is empty, or for every $x\in f^{-1}(y)$, the map $f$ is locally a submersion around $x$. Other points of $N$ are called {\bf critical values}.\\
+
+We say a subset $A\subseteq M$ is a {\bf null set}, if for any coordinate chart $i: U\rightarrow V$, $i(A\cap U)$ has Lebesgue measure $0$. It is easy to see that to check a set is a null set one only need to check the coordinate charts of any compatible smooth atlas.
+
+\begin{thm}[Sard's Theorem]\label{sard}
+    Let $f: M\rightarrow N$ be a smooth map, then the set of critical values is a null set in $N$.
+\end{thm}
+
+The intuition is that if $y\in N$ is a critical value, the preimage of a tiny neighborhood of $y$ must be much larger in $M$. Hence the measure of the set of critical values can not be too large.\\
+
+\begin{exm}\label{imgnull}
+    If $\dim(M)<\dim(N)$, every point in $f(M)$ is a critical value. Hence Sard's theorem implies that $f(M)$ is a null set of $N$, in particular $f(M)\not=N$. As a consequence, even though there are continuous space filling curves, there can not be any smooth curve that fills higher dimensional spaces.
+\end{exm}
+
+\begin{thm}\label{emb0}
+    If $M$ is an embedded submanifold of $\mathbb{R}^N$, $\dim(M)=n$, then $M$ is diffeomorphic to an embedded submanifold of $\mathbb{R}^{2n+1}$.
+\end{thm}
+
+\begin{proof}
+    If $N\leq 2n+1$ this is trivial. So assume $N>2n+1$, then the unit sphere $S$ in $\mathbb{R}^N$ is a smooth manifold of dimension $N-1$. Consider $f: M\times M\backslash \{(x, x): x\in M\}\rightarrow S$ defined as $(x, y)\mapsto (x-y)/dist_{\mathbb{R}^N}(x, y)$, where $dist_{\mathbb{R}^N}$ is the Euclidean distance, then by Example \ref{imgnull} the image of $f$ is a null set in $S$. Consider $g: TM\backslash \{\text{image of zero section}\}\rightarrow S$ as $g(v)=N(i_*(v))$, where $i: M\rightarrow\mathbb{R}^N$ is the embedding and $N(a^i\partial_{x^i})={1\over \sum_{i=1}^N(a^1)^2}(a^1, \dots, a^N)\in S$, then by Example \ref{imgnull} the image of $g$ is also a null set in $S$. Hence there is some $v\in S$ which is not in the image of either $f$ or $g$. Composing with orthogonal projection on $v^\perp$ we get an embedding of $M$ into $\mathbb{R}^{N-1}$. 
+\end{proof}
+
+\begin{thm}[Whitney's Weak Embedding Theorem]\label{whiemb}
+    Any smooth manifold of dimension $n$ has an embedding into $\mathbb{R}^{2n+1}$.
+\end{thm}
+
+\begin{proof}
+    If the manifold $M$ can be covered by the domains of finitely many coordinate charts $i_k: U_k\rightarrow V_k$, let $\{f_k\}$ be the partition of unity function for the finite open cover $\{U_k\}$, then $M$ can be embedded into some $\mathbb{R}^N$ as
+    \[x\mapsto (f_1(x)i_1(x), f_1(x), f_2(x)i_2(x), f_2(x), \dots)\]
+    Here $f_k(x)i_k(x): M\rightarrow \mathbb{R}^n$ is defined as the zero vector if $x\not\in U_k$. Now apply Theorem \ref{emb0}, we see that $M$ can be embedded into $\mathbb{R}^{2n+1}$.\\
+
+    In general, apply Lemma \ref{lem12para}, find a countable cover of the manifold $N$ by domains of coordinate charts, denote these domains as $U_1, U_2, \dots$. Let $f_i$ be the partition of unity function for the open cover $\{U_k\}$, let $F=\sum_n nf_n$, then $F\geq 1$ and $F^{-1}(I)$ for any finite interval $I$ can be covered by finitely many $U_k$. For all positive integers $i$, let $I_i=(i-1, i+1)$, then $\{I_i\}$ is an open cover of $(0, \infty)$ hence has a set of partition of unity functions $g_i$. Because $F^{-1}(I_i)$ can be covered by finitely many coordinate charts, let $\phi_i$ be an embedding of $F^{-1}(I_i)$ into $\mathbb{R}^{2n+1}$. Now there is an embedding of $M$ into $\mathbb{R}^{4n+3}$ defined as
+    \[x\mapsto (\sum_{i\text{ odd}, F(x)\in I_i}g_i(F(x))\phi_i(x), \sum_{i\text{ even}, F(x)\in I_i}g_i(F(x))\phi_i(x), F(x))\]
+    Here summation is the zero vector if the index set is empty.
+    Now apply Theorem \ref{emb0} again one gets the conclusion.
+\end{proof}
+
+With ``Whitney trick'' one can strengthen the embedding theorem to embedding into $\mathbb{R}^{2n}$.\\
+
+Combining Theorem \ref{whiemb} and Theorem \ref{approx2}, we get:
+
+\begin{thm}[Whitney's Smooth Approximation for Maps]\label{approx3}
+Let $M$, $N$ be smooth manifolds, $f$ a continuous map from $M$ to $N$, which is smooth on closed set $A$. Then there is a smooth map $g: M\rightarrow N$ such that there is a continuous map $H: M\times [0, 1]\rightarrow N$, $H(x, 0)=f(x)$, $H(x, 1)=g(x)$, $H(x, t)=f(x)$ if $x\in A$. (This is called {\bf $f$ is homotopic to $g$ relative to $A$}).
+\end{thm}
+
+\begin{proof}
+   Let $i: N\rightarrow\mathbb{R}^K$ be an embedding which exist due to Theorem \ref{whiemb}.  Consider the rank $K$ bundle over $N$ $i^*(T\mathbb{R}^K)$. For any $x\in N$, the fiber of this bundle is $T_x\mathbb{R}^K=\{a^i\partial_i\}$. We identify this with $\mathbb{R}^K$ by $a^i\partial_i\mapsto (a^1, \dots, a^K)$, and give it a positive definite quadratic form via the Euclidean dot product. $TN$ is a rank $\dim(N)$-subbundle by the map $i_*$, let $\mathcal{N}$ be the orthogonal complement of $TN$ in $i^*(T\mathbb{R}^K)$. Now consider a smooth map $F: \mathcal{N}\rightarrow \mathbb{R}^K$, sending $a^i\partial_i\in T_(x^1, \dots, x^K)\mathbb{R}^K$ to $(x^1+a^1, \dots, x^K+a^K)$. It is easy to see that $F$ is full rank on the image of the zero section, hence when restricted to an open neighborhood $V_0$ of this zero section, $F$ is a diffeomophism from $V_0$ to a neighborhood $U$ of $N$.\\
+
+   Now apply Theorem \ref{approx2} to $f$, we get a smooth map $g_1: M\rightarrow U$ such that $g_1=f$ on $A$, and the interval in $\mathbb{R}^K$ linking $f$ to $g_1$ is completely contained in $U$. Let $g=\pi\circ F^{-1}\circ g_1$, and $H(x, t)=\pi\circ F^{-1}\circ((1-t)f(x)+tg(x))$. Here $\pi$ is the projection map for the bundle $\mathcal{N}$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem \ref{sard}]
+    Because countable union of null sets are null sets, and manifolds are second countable, we can without loss of generality assume both $M$ and $N$ be open submanifolds of $\mathbb{R}^m$ and $\mathbb{R}^n$ respectively.\\
+
+    Now induction on $m$: if $m=0$ this is obvious. Now assume $m>0$. Let $C_k$ be the set of points in $M$ where $D^kf=0$, $C$ be the set of points in $M$ where $rank(f)<n$.
+
+    \begin{itemize}
+        \item $f(C\backslash C_1)$ is a null set:  do coordinate change one can assume without loss of generality that $f(x^1, \dots, x^m)=(x^1, \dots)$. Now apply inductive hypothesis and Fubini. 
+        \item One can similarly show that $f(C_k\backslash C_{k+1})$ is null.
+        \item When $k$ is sufficiently large, $f(C_k)$ is null: decompose $M$ into tiny squares, and see that under the map $f$ a square of diameter $r$ will be sent into a square of diameter $o(r^k)$.
+    \end{itemize}
+\end{proof}
+
+\newpage
 
 \section{Exterior Derivatives, Integration and Stokes theorem}
 
@@ -1059,11 +1290,81 @@ Answer: By definition, $f_*([\gamma])=[f\circ\gamma]=(f\circ\gamma)'|_{t=0}\part
 
 1. Show that any smooth 1-form on $\mathbb{R}$ is of the form $df$.\\
 
+Answer: If the $1$-form is $g(x)dx$, let $f=\int_0^x g(t)dt$.\\
+
+
 2. Write down a smooth 1-form on $\mathbb{R}^2$ which is not of the form $df$.\\
+
+Answer: $df=f_xdx+f_ydy$, and $f_{xy}=f_{yx}$ from multivariable calculus, hence for example $dx+xdy$ can not be of the form $df$.\\
 
 3. Write down a smooth 1-form on $S^3$ which is non-zero everywhere.\\
 
+Answer: Let $S^3=\{(x_0, x_1, x_2, x_3): x_0^2+x_1^2+x_2^2+x_3^2=1\}$. Let $x_i: S^3\rightarrow \mathbb{R}$ be smooth functions defined as $(x_0, x_1, x_2, x_3)\mapsto x_i$. Then the $1$ form $x_1dx_0-x_0dx_1+x_3dx_2-x_2dx_3$ is non-zero everywhere.\\
+
 4. Let $f$ and $g$ be smooth functions on manifold $M$, show that $d(fg)=fdg+gdf$.\\
+
+Answer: For any $p\in M$, consider function $fg-f(p)g-g(p)f$, one can show by calculation that its rank at $p$ is $0$. Hence $d(fg)|_p=f(p)dg|_p+g(p)df|_p$.
+
+\subsection{Week 9}
+
+1. Show that if $M$ is a compact manifold, there are finitely many smooth vector fields (smooth sections of $TM$) $X_1, \dots X_N$ such that any smooth vector field can be written as $\sum_{i=1}^Na_iX_i$ where $a_i$ are smooth real valued functions on $M$.\\
+
+Answer: Let $C$ be a finite open cover of $M$ by domains of coordinate charts, for every $U\in C$, let $i_U$ be the coordinate chart and $f_U$ be the partition of unity function. This finite set of smooth vector fields can be chosen as $\{X_{U, i}\}$, where $X_{U, i}(p)=0$ if $p\not\in U$ and $X_{U, i}(p)=f_U(p)(i_U^{-1})_*(\partial_i)$.\\
+
+2. If $f: M\rightarrow N$ is a smooth map between smooth manifolds, $E$, $E'$ two vector bundles on $N$. Show that $f^*(E\otimes E')$ is isomorphic to $f^*(E)\otimes f^*(E')$.\\
+
+Answer: The vector bundle isomorphism can be defined as $(x, v\otimes v')\mapsto (x, v)\otimes (x, v')$. Alternatively, one can check that both sides have the same trivialization and transition functions.\\
+
+3. Let $M$ be a smooth manifold, $E$, $E'$ two vector bundles on $M$, $f: E\rightarrow E'$ a surjective bundle homomorphism over $E$. Show that $E$ is isomorphic to $E'\oplus \ker(f)$.\\
+
+Answer: Pick a positive definite quadratic form on $E$, we can show that $E=\ker(f)\oplus \ker(f)^\perp$. $f|_{\ker(f)^\perp}$ is an isomorphism from $\ker(f)^\perp$ to $E'$.\\
+
+4. Write down a Riemannian metric on $\mathbb{CP}^2$.\\
+
+Answer: The standard metric is the Fubini-Study metric. We can also write down one via partition of unity as follows: let $U_i=\{[z_0:z_1:z_2]: z_i\not=0\}$, coordinate charts $p_i: U_i\rightarrow \mathbb{C}^2=\{x_1+y_1\sqrt{-1}, x_2+y_2\sqrt{-1}\}$, then we can let
+\[g=\sum_ip^*_i(F(x_1^2+x_2^2+y_1^2+y_2^2)dx_1\otimes dx_1+dx_2\otimes dx_2+dy_1\otimes dy_1+dy_2\otimes dy_2)\]
+Here $F(t)=\begin{cases}e^{-1/(100-t^2)} & t<10\\ 0& t\geq 10\end{cases}$.
+
+\subsection{Week 10}
+
+1. Write down a smooth manufold $M$, a smooth map $F: M\times\mathbb{R}\rightarrow M$, such that $F(x, 0)=x$, and $F$ is not the flow of any vector field.\\
+
+Answer: For example, $M=\mathbb{R}$, $F(x, t)=x+t^2$. Basically as long as $F(F(x, a), b)\not=F(x, a+b)$ then $F$ can not be a flow.\\
+
+2. Let $M$, $N$ be smooth manifolds, $f: M\rightarrow N$ a smooth map, $X$ a vector field on $M$ with flow $\Phi$, $Y$ a vector field on $N$ with flow $\Psi$. If for any $p\in M$, $f_*(X(p))=Y(f(p))$, then for any $(p, t)$ in the domain of $\Phi$, $f(\Phi(p, t))=\Psi(f(p), t)$.\\
+
+Answer: Consider the path $\gamma(t)=f(\Phi(p, t))$, then by definition of $f_*$, ${d\over dt}\gamma=f_*(X(\Phi(p, t)))=Y(f(\Phi(p, t)))=Y(\gamma(t))$, and $\gamma(0)=f(p)$, so the equation follows from uniqueness of solutions of ODEs.\\
+
+3. Let $M$ be a smooth manifold with Riemannian metric $g$. $g$ defined a symmetric bilinear form on $T_xM$ for any $x\in M$, denoted as $g(\cdot, \cdot)$.
+\begin{enumerate}
+    \item Show that there is a vector bundle isomorphism $C: T^*M\rightarrow TM$ defined as $g(C(a), v)=(v, a)$ for any $a\in T_x^*M$, $v\in T_xM$, and $(v, a)$ is the standard bilinear pairing $T_xM\times T^*_xM\rightarrow\mathbb{R}$.
+    \item Let $i: U\rightarrow V\subseteq\mathbb{R}^n=\{(x^1, \dots, x^n)\}$ be any smooth coordinate chart on $M$, then it induces a coordinate chart on $T^*M$ defined as $I: T_U^*M\rightarrow V\times \mathbb{R}^n$,
+    \[p_idx^i\in T_{i^{-1}(s^1, \dots, s^n)}^*M\mapsto (s^1, \dots, s^n, p^1, \dots, p^n)\]
+    Let $H$ be a smooth function on $T^*M$, show that there is a vector field $X$ on $T^*M$ such that 
+    \[X(s^1, \dots, s^n, p_1, \dots, p_n)=\sum_i{\partial h\over \partial p_i}\partial_{s^i}-\sum_i{\partial h\over \partial s^i}\partial_{p_i}\]
+    under coordinate chart $I$, and where $h=H\circ I^{-1}$.
+\end{enumerate}
+
+Remark: When $H(a)={1\over 2}g(C(a), C(a))$, the vector flow $X$ defines the {\bf cogeodesic flow}, and $C_*(X)$ is the vector field that defines the geodesic flow.\\
+
+Answer: \begin{enumerate}
+    \item Under a local coordinate chart, if $g=g_{ij}dx^i\otimes dx^j$, let $[g^{ij}]$ be the inverse of the positive definite symmetric matrix $[g_{ij}]$, then $C(dx^i)=g^{ij}\partial_j$.
+    \item Under a change of variable $i'\circ i^{-1}: (s^1, \dots, s^n)\mapsto (t^1, \dots, t^n)$, the point $(s^1, \dots, s^n, p_1, \dots, p_n)$ will be sent to $(t^1, \dots, t^n, q_1, \dots, q_n)$, where 
+    \[q_i=p_j{\partial s^j\over \partial t^i}\]
+    By chain law, we have
+    \[{\partial H\circ I'\over\partial q_i}={\partial h\over\partial s^j}{\partial s^j\over \partial q_i}+{\partial h\over\partial p_j}{\partial p_j\over \partial q_i}\]
+    \[\partial_{t^i}={\partial s^j\over \partial t^i}\partial_{s^j}+{\partial p_j\over \partial t^i}\partial_{p_j}\]
+    \[{\partial H\circ I'\over \partial t^i}={\partial h\over\partial s^j}{\partial s^j\over \partial t^i}+{\partial h\over\partial p_j}{\partial p_j\over \partial t^i}\]
+    \[\partial_{q_i}={\partial p_j\over\partial q_i}\partial_{p_j}+{\partial s^j\over\partial q_i}\partial s^j\]
+    Apply $q_i=p_j{\partial s^j\over \partial t^i}$ and ${\partial s^j\over\partial q_i}=0$ one gets that $X$ is invariant under this coordinate change.
+\end{enumerate}
+
+\subsection{Week 11}
+
+1. Write down a smooth manifold and a smooth foliation on it, such that the leaves of this foliation can not be written as connected components of preimages of points under a submersion.\\
+
+2. Let $f$ and $g$ be two smooth functions, $X=\partial_1+f\partial_2$ and $Y=g\partial_2+\partial_3$ be two vector fields in $\mathbb{R}^3$. Let $D$ be a rank 2 subbundle of $T\mathbb{R}^3$, such that $D_p=span_{\mathbb{R}}(X(p), Y(p))$. Find the condition on $f$ and $g$ that makes $D$ a distribution associated with a dimension 2 foliation on $\mathbb{R}^3$. When $f$ and $g$ satisfy this condition, can you write down all smooth functions $u$ on $\mathbb{R}^3$ such that $\partial_1 u+f\partial_2 u=g\partial_2 u+\partial_3u=0$?
+
 
 \newpage
 
@@ -1096,21 +1397,30 @@ This show that both $\mathbb{RP}^n$ and $\mathbb{CP}^n$ are locally Euclidean he
 Below are some suggested presentation topics. You can find references to these topics via Google or Wikipedia. For more complicated topics it would be sufficient to just present a simplest example! You can also pick some other topic not on this list, preferably related to your own research interests!
 
 \begin{enumerate}
-    \item Every smooth manifold has a triangulation 
-    \item Connections and curvature 
-    \item Relationship between Lie groups and Lie algebras
-    \item Closed subgroups of Lie groups are sub manifolds
-    \item Complex manifolds, Sympletic manifolds or Kähler manifolds
-    \item Riemann surfaces
-    \item Poincar\'e duality
-    \item Chern classes, Euler classes
-    \item Stable and unstable foliations of a hyperbolic flow or diffeomorphism
-    \item C\v ech cohomology and C\v ech to derived functor spectral sequence
-    \item Topological K-theory
-    \item Hamiltonian and Lagrangian in physics 
-    \item Noether's theorem in physics 
-    \item EM field as $U(1)$ gauge theory 
-    \item Manifold learning
+\item Every smooth manifold has a triangulation
+\item Whitney trick in Whitney’s embedding theorem
+\item Connections and curvature
+\item Gauss map and Second fundamental form for embedded manifolds
+\item Relationship between Lie groups and Lie algebras
+\item Closed subgroups of Lie groups are sub manifolds
+\item Exceptional Lie groups
+\item Complex manifolds
+\item Symplectic manifolds 
+\item Kahler manifolds
+\item Toric manifolds
+\item Riemann surfaces
+\item Mapping class groups and braid groups
+\item Poincare duality
+\item Chern classes, Euler classes
+\item John Milnor’s exotic sphere
+\item Stable and unstable foliations of a hyperbolic flow or diffeomorphism
+\item Cech cohomology and its relationship with deRham cohomology (Cech to derived functor spectral sequence)
+\item Classifying spaces of vector bundles
+\item Topological K-theory
+\item Hamiltonian and Lagrangian in physics
+\item Noether’s theorem in physics
+\item EM field as U(1) gauge theory 
+\item Manifold learning
 \end{enumerate}
 
 
