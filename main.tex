@@ -1682,8 +1682,29 @@ Let $S=\{(x_0, x_1, x_2)\in\mathbb{R}^3: x_0^2+x_1^2+x_2^2=1\}$ be the unit sphe
 
 \begin{enumerate}[(1)]
     \item Show that $M$ is an embedded submanifold of $S\times S$ of dimension $3$.
-    \item Write down a smooth atlas on M with finitely many coordinate charts. 
+    \item Write down a smooth atlas on $M$ with finitely many coordinate charts. 
 \end{enumerate}
+
+Answer:
+\begin{enumerate}
+    \item The function $d$ is of constant rank $1$ on $S\times S\backslash \{(p, q): p=q\text{ or }p=-q\}$ which is an open set that contains $M$.
+    \item We can cover $M$ with four coordinate charts $i_0$, $i_1$, $i_2$, $i_3$, defined on $U_0$, $U_1$, $U_2$, $U_3$, as follows:
+    \begin{itemize}
+        \item \begin{itemize}
+            \item $U_0=\{((x_0, x_1, x_2), (y_0, y_1, y_2))\in M: x_0\not=\pm 1, (y_0-x_0/2, y_1-x_1/2, y_2-x_2/2)\text{ is not in the direction of}(1, 0, 0)\times (x_0, x_1, x_2)\}$
+            \item $U_1=\{((x_0, x_1, x_2), (y_0, y_1, y_2))\in M: x_0\not=\pm 1, (y_0-x_0/2, y_1-x_1/2, y_2-x_2/2)\text{ is not in the direction of}(-1, 0, 0)\times (x_0, x_1, x_2)\}$
+            \item $U_2=\{((x_0, x_1, x_2), (y_0, y_1, y_2))\in M: x_1\not=\pm 1, (y_0-x_0/2, y_1-x_1/2, y_2-x_2/2)\text{ is not in the direction of}(0, 1, 0)\times (x_0, x_1, x_2)\}$
+            \item $U_3=\{((x_0, x_1, x_2), (y_0, y_1, y_2))\in M: x_1\not=\pm 1, (y_0-x_0/2, y_1-x_1/2, y_2-x_2/2)\text{ is not in the direction of}(0, -1, 0)\times (x_0, x_1, x_2)\}$
+        \end{itemize}
+        \item \begin{itemize}
+        \item $i_0((x_0, x_1, x_2), (y_0, y_1, y_2))=(x_1/(1-x_0), x_2/(1-x_0), \theta)$, where $\theta\in (0, 2\pi)$ is the angle between $(y_0-x_0/2, y_1-x_1/2, y_2-x_2/2)$ and $(1, 0, 0)\times (x_0, x_1, x_2)$.
+        \item $i_1((x_0, x_1, x_2), (y_0, y_1, y_2))=(x_1/(1-x_0), x_2/(1-x_0), \theta)$, where $\theta\in (0, 2\pi)$ is the angle between $(y_0-x_0/2, y_1-x_1/2, y_2-x_2/2)$ and $(-1, 0, 0)\times (x_0, x_1, x_2)$.
+        \item $i_2((x_0, x_1, x_2), (y_0, y_1, y_2))=(x_0/(1-x_1), x_2/(1-x_1), \theta)$, where $\theta\in (0, 2\pi)$ is the angle between $(y_0-x_0/2, y_1-x_1/2, y_2-x_2/2)$ and $(0, 1, 0)\times (x_0, x_1, x_2)$.
+        \item $i_3((x_0, x_1, x_2), (y_0, y_1, y_2))=(x_0/(1-x_1), x_2/(1-x_1), \theta)$, where $\theta\in (0, 2\pi)$ is the angle between $(y_0-x_0/2, y_1-x_1/2, y_2-x_2/2)$ and $(0, -1, 0)\times (x_0, x_1, x_2)$. 
+        \end{itemize}
+    \end{itemize}
+\end{enumerate}
+
 \newpage
 
 \subsection{HW 2}
@@ -1696,6 +1717,29 @@ is a vector bundle over $S$ under the projection map $\pi\circ \pi'$. Write down
 \item The smooth map $\pi\circ \pi'$ induces a vector bundle homomorphism $(\pi\circ \pi')^*: T(T^*(TS))\rightarrow TS$. Let $N=\{v\in T(T^*(TS)): (\pi\circ \pi')_*(v)=0_p\}$ where $0_p$ is the zero vector in some $T_pS$. Is $N$ a smooth vector bundle over $S$?
 \end{enumerate}
 
+Answer: We shall prove the following:
+
+\begin{thm}
+    Let $E$ be a vector bundle over smooth manifold $M$, $\pi: E\rightarrow M$ the projection map, then:
+    \begin{enumerate}
+        \item $T^*E$ is isomorphic to a vector bundle $E\oplus E^*\oplus T^*M$ over $M$.
+        \item The set $N=\{v\in TE: \pi_*(v)=0\}$ is isomorphic to a vector bundle $E\oplus E$ over $M$.
+    \end{enumerate}
+\end{thm}
+
+\begin{proof}
+    \begin{enumerate}
+        \item Pick a Riemannian metric $g$ on $E$. For any $x\in X$, the fiber of $T^*E$ at $x$ equals $T^*_{E_x}E$. Now pick $q\in E_x$, $v\in T^*_qE$, because $g$ induces a positive definite bilinear form on $T_qE$ hence $T^*qE$, we can write $T^*_qE=\pi^*(T_xM)\oplus (\pi^*(T^*_xM))^\perp$, and $\pi^*(T^*_xM)$ is isomorphic to $T^*_xM$ by $\pi^*$, and $(\pi^*(T^*_xM))^\perp\cong E^*$ by $a\mapsto (v\mapsto a({d\over dt}(q+tv)|_{t=0}))$. Hence $v\in T^*_qE\subseteq T^*_{E_x}(E)$ can be identified with a triple $(q, v_1\in T^*_xM, v_2\in E^*)$.\\
+
+        Because $g$ is smooth the bijection $T^*E\rightarrow E\oplus T^*E\oplus E^*$ is smooth, hence by rank theorem this is a diffeomorphism. 
+
+        \item For any $x\in M$, the fiber of $N$ over $x$ consists of elements of $T_{E_x}E$ which get sent to $0\in T_xM$ by $\pi_*$. If $v\in T_qE$ is such an element in $N_x$, then $v\in T_qE_x\cong E_x$ because $E_x$ has a canonical vector space structure, so $v$ can be identified with $(q, v')$ where $v'\in E_x$ is obtained from $v$ by the isomorphism. Similar to above we can get a bundle isomorphism from $N$ to $E\oplus E$.  
+        \end{enumerate}
+\end{proof}
+
+
+Now both (1) and (2) follows.
+
 \newpage
 \subsection{HW 3}
 
@@ -1707,6 +1751,17 @@ is a vector bundle over $S$ under the projection map $\pi\circ \pi'$. Write down
         \item Let $N$ be the set of tangent vectors in $TS$ whose length under $g$ equals 1. Show that $N$ is an embedded submanifold of $TS$.
         \item Let $\pi: N\rightarrow S$ be the projection map. Can $\pi^*(g)$ be a Riemannian metric on $N$? Here the pull back of a $(0, 2)$ tensor is defined as $\pi^*(a\otimes b)=\pi^*(a)\otimes \pi^*(b)$.
         \item Can you find a non-zero vector field $X$ on $N$ such that $L_X(\pi^*(g))=0$?
+    \end{enumerate}
+\end{enumerate}
+
+Answer:
+\begin{enumerate}
+    \item Suppose $\dim(M)=m$, then any rank $d$ vector bundle $E$ is a smooth manifold of dimension $m+d$. By Whitney's embedding there is some smooth embedding $i: E\rightarrow\mathbb{R}^{2m+2d+1}$. Let $s_0: M\rightarrow E$ be the $0$ section of $E$, sending $x\in M$ to $0\in E_x$, then $i\circ s_0$ is a smooth embedding of $M$ into $\mathbb{R}^{2m+2d+1}$. $T_M\mathbb{R}^{2m+2d+1}=(i\circ s_0)^*T\mathbb{R}^{2m+2d+1}$ is a rank $2m+2d+1$-vector bundle over $E$, and $E$ is a subbundle of that via injective bundle homomorphism: $v\in E_x\mapsto {d\over dt}(vt)|_t\in 0\in T_{(i\circ s_0)(x)}\mathbb{R}^{2m+2d+1}$, hence we can set $N(M, d)=2m+2d+1$.
+    \item \begin{enumerate}[(1)]
+        \item We can let $i: S\rightarrow \mathbb{R}^3$ be the embedding and set $g=i^*(dx\otimes dx+dy\otimes dy+dz\otimes dz)$.
+        \item This is because the map $v\mapsto g(v, v)$ is of constant rank $1$ outside the image of the $0$ section.
+        \item No, the pullback is a symmetric bilinear form but not positive definite.
+        \item Pick and fix an orientation on $S$, let flow $\Phi_t$ be the rotation of the unit tangent vector by $t$ counterclockwise, then $\Phi_t$ preserves $\pi^*(g)$, hence we can let $X={d\over dt}\Phi_t|_{t=0}$.
     \end{enumerate}
 \end{enumerate}
 
